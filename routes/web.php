@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,6 +26,19 @@ Route::get('/', function () {
     ]);
 });
 
+// Route::middleware('auth')->group(function () {
+//     Route::group(['prefix' => 'student', 'middleware' => ['role:admin, teacher']], function () {
+//     });
+// });
+
+Route::get('/teacher', [TeacherController::class, 'index'])->name('teachers.index');
+Route::get('teacher/create', [TeacherController::class, 'create'])->name('teachers.create');
+Route::get('teacher/show', [TeacherController::class, 'show'])->name('teachers.show');
+Route::get('teacher/update', [TeacherController::class, 'update'])->name('teachers.update');
+Route::get('teacher/delete', [TeacherController::class, 'delete'])->name('teachers.delete');
+
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -35,4 +49,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

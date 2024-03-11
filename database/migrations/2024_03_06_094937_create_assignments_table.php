@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id')->unsigned();
             $table->string('title');
             $table->text('description');
             $table->dateTime('deadline');
             $table->string('file')->nullable();
+            $table->integer('student_id')->unsigned()->nullable();
+            $table->integer('teacher_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
         });
     }
 

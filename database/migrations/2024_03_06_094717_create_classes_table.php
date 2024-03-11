@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('class_name');
             $table->string('major');
+            $table->integer('teacher_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
         });
     }
 
