@@ -6,21 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 
-class Teacher extends Model
+class Student extends Model
 {
     use HasFactory, HasRoles;
 
     protected $fillable = [
         'name',
-        'subject'
+        'address',
+        'grade',
+        'major',
+        'photo',
     ];
-
-    public function classes()
-    {
-        // return $this->hasMany(Class::class);
-    }
-    public function assignments()
-    {
-        // return $this->hasMany(Assignment::class);
-    }
 }

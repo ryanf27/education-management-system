@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teacher;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class TeacherController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $teachers = Teacher::paginate(10);
-        return Inertia::render('Teacher/index', [
-            'teachers' => $teachers
+        $students = Student::paginate(10);
+        return Inertia::render('Student/index', [
+            'students' => $students
         ]);
     }
 
@@ -24,7 +24,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Teacher/create');
+        return Inertia::render('Student/create');
     }
 
     /**
@@ -33,8 +33,8 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate();
-        Teacher::create($data);
-        return redirect()->route('teachers.index');
+        Student::create($data);
+        return redirect()->route('students.index');
     }
 
     /**
@@ -42,9 +42,9 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
-        $teacher = Teacher::find($id);
-        return Inertia::render('Teeacher/show', [
-            'teacher' => $teacher,
+        $student = Student::find($id);
+        return Inertia::render('Student/show', [
+            'student' => $student,
         ]);
     }
 
@@ -53,9 +53,9 @@ class TeacherController extends Controller
      */
     public function edit(string $id)
     {
-        $teacher = Teacher::find($id);
-        return Inertia::render('Teacher/edit', [
-            'teacher' => $teacher,
+        $student = Student::find($id);
+        return Inertia::render('Student/edit', [
+            'student$student' => $student,
         ]);
     }
 
@@ -64,10 +64,10 @@ class TeacherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $teacher = Teacher::find($id);
+        $student = Student::find($id);
         $data = $request->validate();
-        $teacher->update($data);
-        return redirect()->route('teachers.index')->with('success', 'teacher updated successfully.');
+        $student->update($data);
+        return redirect()->route('Students.index')->with('success', 'student updated successfully.');
     }
 
     /**
@@ -75,7 +75,7 @@ class TeacherController extends Controller
      */
     public function destroy(string $id)
     {
-        Teacher::destroy($id);
-        return redirect()->route('teachers.index')->with('success', 'teacher deleted successfully');
+        Student::destroy($id);
+        return redirect()->route('students.index')->with('success', 'student deleted successfully');
     }
 }

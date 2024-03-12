@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::get('teacher/create', [TeacherController::class, 'create'])->name('teache
 Route::get('teacher/show', [TeacherController::class, 'show'])->name('teachers.show');
 Route::get('teacher/update', [TeacherController::class, 'update'])->name('teachers.update');
 Route::get('teacher/delete', [TeacherController::class, 'delete'])->name('teachers.delete');
+
+Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+Route::get('student/create', [StudentController::class, 'create'])->name('student.create');
+Route::get('student/show', [StudentController::class, 'show'])->name('student.show');
+Route::get('student/update', [StudentController::class, 'update'])->name('student.update');
+Route::get('student/delete', [StudentController::class, 'delete'])->name('student.delete');
 
 
 
