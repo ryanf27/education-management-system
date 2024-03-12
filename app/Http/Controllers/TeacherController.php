@@ -11,11 +11,11 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         $teacher = Teacher::paginate(10);
         return Inertia::render('Teacher/index', [
-            'teachers' => $teacher, 'role' => $request->user()->role
+            'teachers' => $teacher
         ]);
     }
 
@@ -40,9 +40,9 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Teacher $teacher)
+    public function show(string $id)
     {
-        $teacher = Teacher::paginate(10);
+        $teacher = Teacher::find($id);
         return Inertia::render('Teeacher/show', [
             'teacher' => $teacher,
         ]);
@@ -51,8 +51,9 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function edit(string $id)
     {
+        $teacher = Teacher::find($id);
         return Inertia::render('Teacher/edit', [
             'teacher' => $teacher,
         ]);
@@ -61,8 +62,9 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, string $id)
     {
+        $teacher = Teacher::find($id);
         $data = $request->validate();
         $teacher->update($data);
         return redirect()->route('teachers.index')->with('success', 'teacher updated successfully.');
@@ -71,9 +73,9 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(string $id)
     {
-        $teacher->delete();
+        Teacher::destroy($id);
         return redirect()->route('teachers.index')->with('success', 'teacher deleted successfully');
     }
 }
