@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\Parents;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StudentController extends Controller
+class ParentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $students = Student::paginate(10);
-        return Inertia::render('Student/index', [
-            'students' => $students
-        ]);
+        $parents = Parents::paginate(10);
+
+        return Inertia::render('Parents/index', ['parents' => $parents]);
     }
 
     /**
@@ -24,7 +23,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Student/create');
+        return Inertia::render('Parents/create');
     }
 
     /**
@@ -33,8 +32,8 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate();
-        Student::create($data);
-        return redirect()->route('students.index');
+        Parents::create($data);
+        return redirect()->route('parents.index');
     }
 
     /**
@@ -42,9 +41,9 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = Student::find($id);
-        return Inertia::render('Student/show', [
-            'student' => $student,
+        $parents = Parents::find($id);
+        return Inertia::render('Parents/show', [
+            'parents' => $parents,
         ]);
     }
 
@@ -53,9 +52,9 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        $student = Student::find($id);
-        return Inertia::render('Student/edit', [
-            'student' => $student,
+        $parents = Parents::find($id);
+        return Inertia::render('Parents/edit', [
+            'parents' => $parents,
         ]);
     }
 
@@ -64,10 +63,10 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $student = Student::find($id);
+        $parents = Parents::find($id);
         $data = $request->validate();
-        $student->update($data);
-        return redirect()->route('Students.index')->with('success', 'student updated successfully.');
+        $parents->update($data);
+        return redirect()->route('parents.index')->with('success', 'parents updated successfully.');
     }
 
     /**
@@ -75,7 +74,7 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        Student::destroy($id);
-        return redirect()->route('students.index')->with('success', 'student deleted successfully');
+        Parents::destroy($id);
+        return redirect()->route('parents.index')->with('success', 'parents deleted successfully');
     }
 }

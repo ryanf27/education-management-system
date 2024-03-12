@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -43,6 +44,13 @@ Route::get('student/create', [StudentController::class, 'create'])->name('studen
 Route::get('student/show', [StudentController::class, 'show'])->name('student.show');
 Route::get('student/update', [StudentController::class, 'update'])->name('student.update');
 Route::get('student/delete', [StudentController::class, 'delete'])->name('student.delete');
+Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+
+Route::get('/parents', [ParentsController::class, 'index'])->name('parents.index');
+Route::get('parents/create', [ParentsController::class, 'create'])->name('parents.create');
+Route::get('parents/show', [ParentsController::class, 'show'])->name('parents.show');
+Route::get('parents/update', [ParentsController::class, 'update'])->name('parents.update');
+Route::get('parents/delete', [ParentsController::class, 'delete'])->name('parents.delete');
 
 
 
