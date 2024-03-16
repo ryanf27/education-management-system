@@ -16,13 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->dateTime('deadline');
-            $table->string('file')->nullable();
-            $table->integer('student_id')->unsigned()->nullable();
-            $table->integer('teacher_id')->unsigned()->nullable();
-            $table->timestamps();
-
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
+            $table->unsignedBigInteger('subject_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->unsigned()->nullable();
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
+            $table->timestamps();
         });
     }
 

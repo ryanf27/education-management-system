@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id')->unsigned();
-            $table->integer('class_id')->unsigned();
-
-            $table->integer('math_score')->nullable();
-            $table->integer('science_score')->nullable();
-            $table->integer('language_score')->nullable();
-            $table->float('average_score')->nullable();
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->decimal('math_score', 5, 2)->nullable();
+            $table->decimal('science_score', 5, 2)->nullable();
+            $table->decimal('language_score', 5, 2)->nullable();
+            $table->decimal('average_score', 5, 2)->nullable();
             $table->text('notes')->nullable();
-
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('class_id')->references('id')->on('classes');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();
         });
     }
