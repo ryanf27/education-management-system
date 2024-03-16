@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use Spatie\Permission\Models\Role;
 
 use App\Models\Teacher;
+use App\Models\Student;
+use App\Models\Parents;
 
 
 
@@ -47,14 +49,35 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+
         ]);
 
-        // Assign role and create related moded
-        if ($request->role) {
-            Teacher::create([
-                'user_id' => $user->id,
-                'name' => $request->name,
-            ]);
+        $roleInput = $request->input('role');
+        $role = Role::where('name', $request->input('role'))->firstOrFail();
+
+        switch ($roleInput) {
+            case 'student':
+                Student::create([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                    'class' => $request->class ?? null,
+                ]);
+                $user->assignRole($role);
+                break;
+            case 'teacher':
+                Teacher::create([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                ]);
+                $user->assignRole($role);
+                break;
+            case 'parent':
+                Parents::create([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                ]);
+                $user->assignRole($role);
+                break;
         }
 
 
@@ -62,6 +85,15 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        switch ($roleInput) {
+            case 'teacher':
+                return redirect()->route('teachers.index');
+            case 'student':
+                return redirect()->route('students.index');
+            case 'parent':
+                return redirect()->route('parents.index');
+            default:
+                return redirect()->route('/');
+        }
     }
 }

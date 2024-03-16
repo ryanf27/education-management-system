@@ -27,41 +27,50 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+// ['auth', 'verified']
+Route::prefix('dashboard')->group(function () {
+    // Dashboard Route
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-// Route::middleware('auth')->group(function () {
-//     Route::group(['prefix' => 'student', 'middleware' => ['role:admin, teacher']], function () {
-//     });
-// });
+    // Profile Routes
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 
-Route::get('/teacher', [TeacherController::class, 'index'])->name('teachers.index');
-Route::get('teacher/create', [TeacherController::class, 'create'])->name('teachers.create');
-Route::get('teacher/show', [TeacherController::class, 'show'])->name('teachers.show');
-Route::get('teacher/update', [TeacherController::class, 'update'])->name('teachers.update');
-Route::get('teacher/delete', [TeacherController::class, 'delete'])->name('teachers.delete');
+    // Teacher Routes
+    Route::middleware('role:teacher|admin')->group(function () {
+        Route::get('/teacher', [TeacherController::class, 'index'])->name('teachers.index');
+        Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teachers.create');
+        Route::post('/teacher', [TeacherController::class, 'store'])->name('teachers.store');
+        Route::get('/teacher/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
+        Route::get('/teacher/{teacher}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+        Route::put('/teacher/{teacher}', [TeacherController::class, 'update'])->name('teachers.update');
+        Route::delete('/teacher/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+    });
 
-Route::get('/student', [StudentController::class, 'index'])->name('student.index');
-Route::get('student/create', [StudentController::class, 'create'])->name('student.create');
-Route::get('student/show', [StudentController::class, 'show'])->name('student.show');
-Route::get('student/update', [StudentController::class, 'update'])->name('student.update');
-Route::get('student/delete', [StudentController::class, 'delete'])->name('student.delete');
-Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+    // // Student Routes
+    Route::middleware(['role:student|admin'])->group(function () {
+        Route::get('/student', [StudentController::class, 'index'])->name('students.index');
+        Route::get('/student/create', [StudentController::class, 'create'])->name('students.create');
+        Route::get('/student/show', [StudentController::class, 'show'])->name('students.show');
+        Route::get('/student/update', [StudentController::class, 'update'])->name('students.update');
+        Route::get('/student/delete', [StudentController::class, 'delete'])->name('students.delete');
+    });
 
-Route::get('/parents', [ParentsController::class, 'index'])->name('parents.index');
-Route::get('parents/create', [ParentsController::class, 'create'])->name('parents.create');
-Route::get('parents/show', [ParentsController::class, 'show'])->name('parents.show');
-Route::get('parents/update', [ParentsController::class, 'update'])->name('parents.update');
-Route::get('parents/delete', [ParentsController::class, 'delete'])->name('parents.delete');
+    // // Parent Routes
+    Route::middleware(['role:parent|admin'])->group(function () {
+        Route::get('/parent', [ParentsController::class, 'index'])->name('parents.index');
+        Route::get('/parent/create', [ParentsController::class, 'create'])->name('parents.create');
+        Route::get('/parent/show', [ParentsController::class, 'show'])->name('parents.show');
+        Route::get('/parent/update', [ParentsController::class, 'update'])->name('parents.update');
+        Route::get('/parent/delete', [ParentsController::class, 'delete'])->name('parents.delete');
+    });
+})->middleware(['auth']);
 
-
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';

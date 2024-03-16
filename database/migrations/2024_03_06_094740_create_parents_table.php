@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('parents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();
