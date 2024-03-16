@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address')->nullable();
-            $table->string('subject')->nullable();
+            $table->unsignedBigInteger('subject_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
