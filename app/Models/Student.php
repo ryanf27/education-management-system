@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -14,9 +15,9 @@ class Student extends Model
     protected $fillable = [
         'name',
         'address',
-        'grade',
-        'major',
-        'photo',
+        'date_of_birth',
+        'class_id',
+        'user_id',
     ];
 
     public function classes(): HasMany
@@ -32,5 +33,15 @@ class Student extends Model
     public function submissions(): HasMany
     {
         return $this->hasMany(Submission::class);
+    }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Reports::class);
+    }
+
+    public function parents(): BelongsTo
+    {
+        return $this->belongsTo(Parents::class);
     }
 }

@@ -27,4 +27,16 @@ class Teacher extends Model
     {
         return $this->hasMany(Subject::class);
     }
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
+    public function classes(): HasMany
+    {
+        return $this->hasMany(Classes::class);
+    }
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Reports::class);
+    }
 }

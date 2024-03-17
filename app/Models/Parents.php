@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Student;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Parents extends Model
 {
@@ -18,8 +19,8 @@ class Parents extends Model
 
     ];
 
-    public function student()
+    public function student(): HasMany
     {
-        return $this->belongsTo(Student::class);
+        return $this->hasMany(Student::class);
     }
 }
