@@ -17,9 +17,11 @@ return new class extends Migration
             $table->text('description');
             $table->dateTime('deadline');
             $table->unsignedBigInteger('subject_id')->nullable();
-            $table->unsignedBigInteger('teacher_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->unsignedBigInteger('classes_id')->nullable();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
+            $table->foreign('classes_id')->references('id')->on('classes')->onDelete('set null');
             $table->timestamps();
         });
     }

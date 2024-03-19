@@ -1,6 +1,6 @@
 import React from "react";
 import Dashboard from "../Dashboard";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 const index = () => {
     return (

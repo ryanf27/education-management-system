@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -47,11 +48,23 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/teacher', [TeacherController::class, 'index'])->name('teachers.index');
         Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teachers.create');
         Route::post('/teacher', [TeacherController::class, 'store'])->name('teachers.store');
-        Route::get('/teacher/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
-        Route::get('/teacher/{teacher}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
-        Route::put('/teacher/{teacher}', [TeacherController::class, 'update'])->name('teachers.update');
-        Route::delete('/teacher/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+        Route::get('/teacher/{id}', [TeacherController::class, 'show'])->name('teachers.show');
+        Route::get('/teacher/{id}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+        Route::put('/teacher/{id}', [TeacherController::class, 'update'])->name('teachers.update');
+        Route::delete('/teacher/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+
+        // assignments Routes 
+        Route::prefix('assignments')->group(function () {
+            Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
+            Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
+            Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+            Route::get('/{id}', [AssignmentController::class, 'show'])->name('assignments.show');
+            Route::get('/{id}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
+            Route::put('/{id}', [AssignmentController::class, 'update'])->name('assignments.update');
+            Route::delete('/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+        });
     });
+
 
     // // Student Routes
     Route::middleware(['role:student|admin'])->group(function () {

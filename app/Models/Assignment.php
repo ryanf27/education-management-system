@@ -18,21 +18,23 @@ class Assignment extends Model
         'deadline',
         'subject_id',
         'teacher_id',
+        'clasess_id',
     ];
 
-    public function subject(): belongsTo
+    public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }
+
 
     public function teacher(): belongsTo
     {
         return $this->belongsTo(Teacher::class);
     }
 
-    public function students(): belongsToMany
+    public function classes(): belongsToMany
     {
-        return $this->belongsToMany(Student::class, 'assignment_student');
+        return $this->belongsToMany(Classes::class);
     }
 
     public function submissions(): hasMany

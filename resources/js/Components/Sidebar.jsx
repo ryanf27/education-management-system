@@ -8,6 +8,7 @@ const SidebarLink = ({ to, children, method = "get" }) => (
             className="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
             href={to}
             method={method}
+            as="button"
         >
             {children}
         </Link>
@@ -38,7 +39,7 @@ export default function Sidebar() {
                         </SidebarLink>
                         {roles === "teacher" && (
                             <>
-                                <SidebarLink to="dashboard/assignments">
+                                <SidebarLink to={route("assignments.index")}>
                                     Assignments
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/schedule">
@@ -51,7 +52,7 @@ export default function Sidebar() {
                                 <SidebarLink to="dashboard/courses">
                                     Courses
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/assignments">
+                                <SidebarLink to="dashboard/teacher/assignment">
                                     Assignments
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/schedule">
