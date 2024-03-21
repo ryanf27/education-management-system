@@ -5,6 +5,7 @@ use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\SubmissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 // ['auth', 'verified']
 Route::prefix('dashboard')->group(function () {
     // Dashboard Route
@@ -41,6 +43,17 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    // Submissions Routes
+    Route::prefix('submissions')->group(function () {
+        Route::get('/', [SubmissionController::class, 'index'])->name('submissions.index');
+        Route::get('/create', [SubmissionController::class, 'create'])->name('submissions.create');
+        Route::post('/', [SubmissionController::class, 'store'])->name('submissions.store');
+        Route::get('/{id}', [SubmissionController::class, 'show'])->name('submissions.show');
+        Route::get('/{id}/edit', [SubmissionController::class, 'edit'])->name('submissions.edit');
+        Route::put('/{id}', [SubmissionController::class, 'update'])->name('submissions.update');
+        Route::delete('/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
     });
 
     // Teacher Routes
@@ -64,7 +77,6 @@ Route::prefix('dashboard')->group(function () {
             Route::delete('/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
         });
     });
-
 
     // // Student Routes
     Route::middleware(['role:student|admin'])->group(function () {

@@ -14,7 +14,6 @@ export default function Register() {
         password: "",
         password_confirmation: "",
         role: "",
-        class: "",
     });
 
     useEffect(() => {
@@ -28,7 +27,6 @@ export default function Register() {
         post(route("register"));
     };
 
-    const isStudent = data.role === "student";
     return (
         <GuestLayout>
             <Head title="Register" />
@@ -51,21 +49,6 @@ export default function Register() {
                     <InputError message={errors.role} className="mt-2" />
                 </div>
 
-                {isStudent && (
-                    <div className="mt-4">
-                        <InputLabel htmlFor="class" value="Class" />
-                        <TextInput
-                            id="class"
-                            name="class"
-                            value={data.class}
-                            className="mt-1 block w-full"
-                            autoComplete="class"
-                            onChange={(e) => setData("class", e.target.value)}
-                            required={isStudent}
-                        />
-                        <InputError message={errors.class} className="mt-2" />
-                    </div>
-                )}
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 

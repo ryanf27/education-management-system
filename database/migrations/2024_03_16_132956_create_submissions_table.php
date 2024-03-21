@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->text('file');
-            $table->float('score');
+            $table->text('file')->nullable();
+            $table->float('score')->nullable();
             $table->unsignedBigInteger('assignment_id')->nullable();
             $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
             $table->timestamps();

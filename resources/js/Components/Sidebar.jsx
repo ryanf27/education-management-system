@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 
@@ -37,14 +36,13 @@ export default function Sidebar() {
                         <SidebarLink to={`/dashboard/${auth.roles}`}>
                             Home
                         </SidebarLink>
+                        <SidebarLink>Anauncment</SidebarLink>
                         {roles === "teacher" && (
                             <>
                                 <SidebarLink to={route("assignments.index")}>
                                     Assignments
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/schedule">
-                                    Schedule
-                                </SidebarLink>
+                                <SidebarLink to="/">Schedule</SidebarLink>
                             </>
                         )}
                         {roles === "student" && (
@@ -52,8 +50,14 @@ export default function Sidebar() {
                                 <SidebarLink to="dashboard/courses">
                                     Courses
                                 </SidebarLink>
+                                <SidebarLink to={route("submissions.index")}>
+                                    Submission
+                                </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
-                                    Assignments
+                                    Exam
+                                </SidebarLink>
+                                <SidebarLink to="dashboard/teacher/assignment">
+                                    Event
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/schedule">
                                     Schedule
