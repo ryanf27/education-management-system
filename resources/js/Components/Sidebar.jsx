@@ -47,7 +47,7 @@ export default function Sidebar() {
                         )}
                         {roles === "student" && (
                             <>
-                                <SidebarLink to="dashboard/courses">
+                                <SidebarLink to={route("courses.index")}>
                                     Courses
                                 </SidebarLink>
                                 <SidebarLink to={route("submissions.index")}>
@@ -63,7 +63,7 @@ export default function Sidebar() {
                                     Schedule
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/class">
-                                    Class
+                                    My Class
                                 </SidebarLink>
                             </>
                         )}

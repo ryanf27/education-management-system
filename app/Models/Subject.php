@@ -23,13 +23,13 @@ class Subject extends Model
     }
 
 
-    public function classes(): BelongsToMany
+    public function classes(): HasMany
     {
-        return $this->belongsToMany(Classes::class);
+        return $this->hasMany(Classes::class);
     }
 
 
-    public function assignments(): hasMany
+    public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class);
     }

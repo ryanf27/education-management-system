@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,6 +56,29 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/{id}/edit', [SubmissionController::class, 'edit'])->name('submissions.edit');
         Route::put('/{id}', [SubmissionController::class, 'update'])->name('submissions.update');
         Route::delete('/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
+    });
+
+    // Erollments Routes
+    Route::prefix('enrollments')->group(function () {
+        Route::get('/', [EnrollmentController::class, 'index'])->name('enrollments.index');
+        Route::get('/create/classId', [EnrollmentController::class, 'create'])->name('enrollments.create');
+        Route::post('/', [EnrollmentController::class, 'store'])->name('enrollments.store');
+        Route::get('/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
+        Route::get('/{id}/edit', [EnrollmentController::class, 'edit'])->name('enrollments.edit');
+        Route::put('/{id}', [EnrollmentController::class, 'update'])->name('enrollments.update');
+        Route::delete('/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+    })->middleware('role:admin|parent|student');
+
+
+    // Course Routes
+    Route::middleware('role:student|admin|teacher')->group(function () {
+        Route::get('/course', [CourseController::class, 'index'])->name('courses.index');
+        Route::get('/course/create', [CourseController::class, 'create'])->name('courses.create');
+        Route::post('/course', [CourseController::class, 'store'])->name('courses.store');
+        Route::get('/course/{id}', [CourseController::class, 'show'])->name('courses.show');
+        Route::get('/course/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+        Route::put('/course/{id}', [CourseController::class, 'update'])->name('courses.update');
+        Route::delete('/course/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
     });
 
     // Teacher Routes
