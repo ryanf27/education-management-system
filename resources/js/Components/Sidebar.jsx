@@ -53,6 +53,9 @@ export default function Sidebar() {
                                 <SidebarLink to={route("submissions.index")}>
                                     Submission
                                 </SidebarLink>
+                                <SidebarLink to="dashboard/class">
+                                    My Class
+                                </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
                                     Exam
                                 </SidebarLink>
@@ -61,9 +64,6 @@ export default function Sidebar() {
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/schedule">
                                     Schedule
-                                </SidebarLink>
-                                <SidebarLink to="dashboard/class">
-                                    My Class
                                 </SidebarLink>
                             </>
                         )}
