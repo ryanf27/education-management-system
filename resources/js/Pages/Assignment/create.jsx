@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Dashboard from "../Dashboard";
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+import SelectInput from "@/Components/SelectInput";
+import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 
-const CreateAssignment = ({ subjects, teachers, classes }) => {
+const Create = ({ subjects, teachers, classes }) => {
     const [values, setValues] = useState({
         title: "",
         description: "",
@@ -29,30 +33,34 @@ const CreateAssignment = ({ subjects, teachers, classes }) => {
     return (
         <Dashboard>
             <div className="max-w-4xl mx-auto py-10">
+                <h2 className="text-2xl font-semibold mb-5">
+                    Create Assignment
+                </h2>
                 <form onSubmit={handleSubmit} className="space-y-8">
                     <div>
-                        <label
+                        <InputLabel
                             htmlFor="title"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Title
-                        </label>
-                        <input
+                        </InputLabel>
+
+                        <TextInput
                             type="text"
                             id="title"
                             onChange={handleChange}
                             value={values.title}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Title.."
                             required
                         />
                     </div>
                     <div>
-                        <label
+                        <InputLabel
                             htmlFor="description"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Description
-                        </label>
+                        </InputLabel>
                         <textarea
                             id="description"
                             onChange={handleChange}
@@ -63,33 +71,31 @@ const CreateAssignment = ({ subjects, teachers, classes }) => {
                         ></textarea>
                     </div>
                     <div>
-                        <label
+                        <InputLabel
                             htmlFor="deadline"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Deadline
-                        </label>
-                        <input
+                        </InputLabel>
+                        <TextInput
                             type="date"
                             id="deadline"
                             onChange={handleChange}
                             value={values.deadline}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
                         />
                     </div>
-                    <div>
-                        <label
+                    <div className="">
+                        <InputLabel
                             htmlFor="subject_id"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Subject
-                        </label>
-                        <select
+                        </InputLabel>
+                        <SelectInput
                             id="subject_id"
                             onChange={handleChange}
                             value={values.subject_id}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
                         >
                             <option value="">Select a subject</option>
@@ -98,18 +104,17 @@ const CreateAssignment = ({ subjects, teachers, classes }) => {
                                     {subject.name}
                                 </option>
                             ))}
-                        </select>
-                        <label
+                        </SelectInput>
+                        <InputLabel
                             htmlFor="subject_id"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Class
-                        </label>
-                        <select
+                        </InputLabel>
+                        <SelectInput
                             id="classes_id"
                             onChange={handleChange}
                             value={values.classes_id}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
                         >
                             <option value="">Select a class</option>
@@ -118,15 +123,12 @@ const CreateAssignment = ({ subjects, teachers, classes }) => {
                                     {cls.name}
                                 </option>
                             ))}
-                        </select>
+                        </SelectInput>
                     </div>
                     <div>
-                        <button
-                            type="submit"
-                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
+                        <PrimaryButton type="submit">
                             Create Assignment
-                        </button>
+                        </PrimaryButton>
                     </div>
                 </form>
             </div>
@@ -134,4 +136,4 @@ const CreateAssignment = ({ subjects, teachers, classes }) => {
     );
 };
 
-export default CreateAssignment;
+export default Create;

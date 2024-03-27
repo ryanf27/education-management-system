@@ -36,7 +36,9 @@ export default function Sidebar() {
                         <SidebarLink to={`/dashboard/${auth.roles}`}>
                             Home
                         </SidebarLink>
-                        <SidebarLink>Anauncment</SidebarLink>
+                        <SidebarLink to={route("announcement.index")}>
+                            Annauncement
+                        </SidebarLink>
                         {roles === "teacher" && (
                             <>
                                 <SidebarLink to={route("assignments.index")}>
@@ -53,7 +55,7 @@ export default function Sidebar() {
                                 <SidebarLink to={route("submissions.index")}>
                                     Submission
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/class">
+                                <SidebarLink to={route("enrollments.index")}>
                                     My Class
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
@@ -85,7 +87,9 @@ export default function Sidebar() {
                     </ul>
                     <ul className="hidden md:flex md:flex-col md:min-w-full x:hidden  flex-col list-none mt-6 mb-3 border-b-2 border-bottom-width: 2px;">
                         <SidebarLink to="/">Settings</SidebarLink>
-                        <SidebarLink to="/">Profile</SidebarLink>
+                        <SidebarLink to={route("profile.edit")}>
+                            Profile
+                        </SidebarLink>
                         <SidebarLink to={route("logout")} method="post">
                             Logout
                         </SidebarLink>

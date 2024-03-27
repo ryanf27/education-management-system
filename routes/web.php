@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,11 +41,22 @@ Route::prefix('dashboard')->group(function () {
     })->name('dashboard');
 
     // Profile Routes
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:admin|student|teacher')->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    // Anouncment Route
+    Route::prefix('announcement')->group(function () {
+        Route::get('/', [AnnouncementController::class, 'index'])->name('announcement.index');
+        Route::get('/create', [AnnouncementController::class, 'create'])->name('announcement.create');
+        Route::post('/', [AnnouncementController::class, 'store'])->name('announcement.store');
+        Route::get('/{id}', [AnnouncementController::class, 'show'])->name('announcement.show');
+        Route::get('/{id}/edit', [AnnouncementController::class, 'edit'])->name('announcement.edit');
+        Route::put('/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
+        Route::delete('/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.destroy');
     });
 
     // Submissions Routes

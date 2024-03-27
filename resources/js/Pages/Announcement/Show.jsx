@@ -3,16 +3,16 @@ import { router } from "@inertiajs/react";
 import Dashboard from "../Dashboard";
 import DetailCard from "@/Components/DetailCard";
 
-const Show = ({ assignment }) => {
+const Show = ({ announcement }) => {
     return (
         <Dashboard>
             <DetailCard
-                title={assignment.title}
-                description={assignment.description}
-                deadline={assignment.deadline}
-                backUrl={route("assignments.index")}
+                title={announcement.title}
+                description={announcement.body}
+                deadline={announcement.expiry_date}
+                backUrl={route("announcement.index")}
                 onEdit={() => {
-                    router.get(route("assignments.edit", assignment.id));
+                    router.get(route("announcement.edit", announcement.id));
                 }}
             />
         </Dashboard>

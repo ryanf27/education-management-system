@@ -7,7 +7,10 @@ export default function Dashboard({ children }) {
             <Head title="Dashboard" />
             <div className="flex min-h-screen">
                 <Sidebar />
-                <div className="flex-1 md:ml-64 bg-blueGray-100">
+                <div
+                    id="main"
+                    className="flex-1 md:ml-64 bg-slate-100 justify-center items-center flex-col"
+                >
                     {children}
                 </div>
             </div>

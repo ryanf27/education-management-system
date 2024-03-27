@@ -3,12 +3,10 @@ import Dashboard from "../Dashboard"; // Assuming you have a Dashboard component
 import { Head, Link } from "@inertiajs/react";
 
 const Index = ({ enrollments }) => {
-    console.log(enrollments);
-
     return (
         <Dashboard>
             <Head title="Enrollments" />
-            <h2 className=" text-2xl">Enrollment List</h2>
+            <h2 className=" text-2xl">My Class list</h2>
 
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg my-6">
                 <table className="w-full text-sm text-left text-gray-900 border border-gray-200 rounded-lg">

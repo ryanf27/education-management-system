@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import PagesDropdown from "./Dropdown";
+import ApplicationLogo from "./ApplicationLogo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -13,8 +14,8 @@ const Navbar = ({ auth }) => {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     return (
         <>
-            <nav className="top-0 absolute z-50 w-full flex justify-center items-center px-2 py-3 navbar-expand-lg">
-                <div className="px-4 flex justify-between items-center mx-auto">
+            <nav className="top-0 absolute z-50 w-full flex justify-center items-center px-2 py-3 ">
+                <div className="px-4 flex justify-center items-center mx-auto">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <button
                             className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -40,14 +41,11 @@ const Navbar = ({ auth }) => {
                         <ul className="flex flex-col lg:flex-row list-none mr-auto">
                             <li className="flex items-center">
                                 <a
-                                    className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                                    href="#"
+                                    className=" text-gray-100 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                                    href="/"
                                 >
-                                    <FontAwesomeIcon
-                                        icon={faFileAlt}
-                                        className="lg:text-blueGray-200 text-blueGray-400 text-lg leading-lg mr-2"
-                                    />{" "}
-                                    Docs
+                                    <ApplicationLogo className="h-8 w-8 mr-2 " />{" "}
+                                    <span>Education Management</span>
                                 </a>
                             </li>
                         </ul>
@@ -57,13 +55,13 @@ const Navbar = ({ auth }) => {
                             </li>
                             <li className="flex items-center">
                                 <a
-                                    className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                                    className="lg:text-white lg:hover:text-slate-200 text-slate-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                                     href="#"
                                     target="_blank"
                                 >
                                     <FontAwesomeIcon
                                         icon={faFacebook}
-                                        className="lg:text-blueGray-200 text-blueGray-400 text-lg leading-lg"
+                                        className="lg:text-slate-200 text-slate-400 text-lg leading-lg"
                                     />
                                     <span className="lg:hidden inline-block ml-2">
                                         Share
@@ -72,13 +70,13 @@ const Navbar = ({ auth }) => {
                             </li>
                             <li className="flex items-center">
                                 <a
-                                    className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                                    className="lg:text-white lg:hover:text-slate-200 text-slate-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                                     href="#"
                                     target="_blank"
                                 >
                                     <FontAwesomeIcon
                                         icon={faTwitter}
-                                        className="lg:text-blueGray-200 text-blueGray-400 text-lg leading-lg"
+                                        className="lg:text-slate-200 text-slate-400 text-lg leading-lg"
                                     />
                                     <span className="lg:hidden inline-block ml-2">
                                         Tweet
@@ -87,13 +85,13 @@ const Navbar = ({ auth }) => {
                             </li>
                             <li className="flex items-center">
                                 <a
-                                    className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                                    className="lg:text-white lg:hover:text-slate-200 text-slate-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                                     href="#"
                                     target="_blank"
                                 >
                                     <FontAwesomeIcon
                                         icon={faGithub}
-                                        className="lg:text-blueGray-200 text-blueGray-400 text-lg leading-lg"
+                                        className="lg:text-slate-200 text-slate-400 text-lg leading-lg"
                                     />
                                     <span className="lg:hidden inline-block ml-2">
                                         Star

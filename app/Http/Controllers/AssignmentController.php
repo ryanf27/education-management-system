@@ -17,7 +17,7 @@ class AssignmentController extends Controller
     public function index()
     {
         $assignments = Assignment::all()->toArray();
-        return Inertia::render('Assignment/index', [
+        return Inertia::render('Assignment/Index', [
             'assignments' => $assignments
         ]);
     }
@@ -30,7 +30,7 @@ class AssignmentController extends Controller
         $subjects = Subject::all()->toArray();
         $teachers = Auth::user()->id;
         $classes = Classes::all()->toArray();
-        return Inertia::render('Assignment/create', [
+        return Inertia::render('Assignment/Create', [
             'subjects' => $subjects,
             'teachers' => $teachers,
             'classes' => $classes,
@@ -61,7 +61,7 @@ class AssignmentController extends Controller
     public function show(string $id)
     {
         $assignment = Assignment::find($id);
-        return Inertia::render('Assignment/show', [
+        return Inertia::render('Assignment/Show', [
             'assignment' => $assignment
         ]);
     }
@@ -72,7 +72,7 @@ class AssignmentController extends Controller
     public function edit(string $id)
     {
         $assignment = Assignment::find($id);
-        return Inertia::render('Assignment/edit', [
+        return Inertia::render('Assignment/Edit', [
             'assignment' => $assignment
         ]);
     }
