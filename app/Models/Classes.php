@@ -36,4 +36,9 @@ class Classes extends Model
     {
         return $this->hasMany(Assignment::class);
     }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedules::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,17 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/{id}/edit', [AnnouncementController::class, 'edit'])->name('announcement.edit');
         Route::put('/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
         Route::delete('/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.destroy');
+    });
+
+    // // Schedule Routes
+    Route::prefix('schedules')->group(function () {
+        Route::get('/', [SchedulesController::class, 'index'])->name('schedules.index');
+        Route::get('/create', [SchedulesController::class, 'create'])->name('schedules.create');
+        Route::post('/', [SchedulesController::class, 'store'])->name('schedules.store');
+        Route::get('/{schedules}', [SchedulesController::class, 'show'])->name('schedules.show');
+        Route::get('/{schedules}/edit', [SchedulesController::class, 'edit'])->name('schedules.edit');
+        Route::put('/{id}', [SchedulesController::class, 'update'])->name('schedules.update');
+        Route::delete('/{schedules}', [SchedulesController::class, 'destroy'])->name('schedules.destroy');
     });
 
     // Submissions Routes

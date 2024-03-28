@@ -17,11 +17,11 @@ const Index = ({ announcements }) => {
     const handleDetail = (id) => {
         router.get(route("announcement.show", id));
     };
-
+    
     const headers = [
         { id: "title", label: "Title" },
         { id: "body", label: "body" },
-        { id: "expire_date", label: "expire_date" },
+        { id: "expiry_date", label: "Expiry date" },
     ];
     return (
         <>

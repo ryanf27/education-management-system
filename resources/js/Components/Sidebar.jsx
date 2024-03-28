@@ -44,7 +44,9 @@ export default function Sidebar() {
                                 <SidebarLink to={route("assignments.index")}>
                                     Assignments
                                 </SidebarLink>
-                                <SidebarLink to="/">Schedule</SidebarLink>
+                                <SidebarLink to={route("schedules.index")}>
+                                    Schedule
+                                </SidebarLink>
                             </>
                         )}
                         {roles === "student" && (
@@ -64,7 +66,7 @@ export default function Sidebar() {
                                 <SidebarLink to="dashboard/teacher/assignment">
                                     Event
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/schedule">
+                                <SidebarLink to={route("schedules.index")}>
                                     Schedule
                                 </SidebarLink>
                             </>
