@@ -1,18 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
-
-const SidebarLink = ({ to, children, method = "get" }) => (
-    <li className="items-center">
-        <Link
-            className="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
-            href={to}
-            method={method}
-            as="button"
-        >
-            {children}
-        </Link>
-    </li>
-);
+import SidebarLink from "./SidebarLink";
 
 export default function Sidebar() {
     const { auth } = usePage().props;
