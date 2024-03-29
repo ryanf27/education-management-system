@@ -85,14 +85,11 @@ Route::prefix('dashboard')->group(function () {
     // Erollments Routes
     Route::prefix('enrollments')->group(function () {
         Route::get('/', [EnrollmentController::class, 'index'])->name('enrollments.index');
-        Route::get('/create/classId', [EnrollmentController::class, 'create'])->name('enrollments.create');
+        Route::get('/create', [EnrollmentController::class, 'create'])->name('enrollments.create');
         Route::post('/', [EnrollmentController::class, 'store'])->name('enrollments.store');
-        Route::get('/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
-        Route::get('/{id}/edit', [EnrollmentController::class, 'edit'])->name('enrollments.edit');
-        Route::put('/{id}', [EnrollmentController::class, 'update'])->name('enrollments.update');
-        Route::delete('/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+        Route::get('/{enrollment}', [EnrollmentController::class, 'show'])->name('enrollments.show');
+        Route::delete('/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
     })->middleware('role:admin|parent|student');
-
 
     // Course Routes
     Route::middleware('role:student|admin|teacher')->group(function () {

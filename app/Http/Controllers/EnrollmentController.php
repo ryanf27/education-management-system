@@ -8,6 +8,7 @@ use App\Models\Classes;
 use App\Models\Student;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EnrollmentController extends Controller
 {
@@ -16,11 +17,21 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        $enrollments = Enrollment::all();
+        $student = Auth::user()->student->id;
+
+        $enrollmentJoin = DB::table('enrollments')
+            ->join('classes', 'classes.id', '=', 'enrollments.class_id')
+            ->join('students', 'students.id', '=', 'enrollments.student_id')
+            ->select('enrollments.id', 'enrollments.created_at', 'students.name as student_name', 'classes.name as class_name')
+            ->where('students.id', $student)
+            ->get();
+
+
         return Inertia::render('Enrollments/Index', [
-            'enrollments' => $enrollments
+            'enrollments' => $enrollmentJoin
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,32 +65,28 @@ class EnrollmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Enrollment $enrollment)
     {
-        //
+        $enrollmentJoin = DB::table('enrollments')
+            ->join('classes', 'classes.id', '=', 'enrollments.class_id')
+            ->join('students', 'students.id', '=', 'enrollments.student_id')
+            ->select('students.name as student_name', 'classes.name as class_name', 'classes.grade as class_grade', 'enrollments.id', 'enrollments.created_at')
+            ->where('enrollments.id', $enrollment->id)
+            ->first();
+
+        return Inertia::render('Enrollments/Show', [
+            'enrollment' => $enrollmentJoin,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Enrollment $enrollment)
     {
-        //
+        $enrollment->delete();
+
+        return redirect()->route('enrollments.index');
     }
 }

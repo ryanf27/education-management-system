@@ -8,8 +8,6 @@ const Create = ({ studentClass, student_id }) => {
         class_id: studentClass.id,
     });
 
-    console.log(studentClass);
-
     // Submission handler
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -31,7 +31,7 @@ const DetailCard = ({
                     </p>
                     {deadline && (
                         <p className="text-gray-600">
-                            Deadline:{" "}
+                            Date:{" "}
                             <span className="text-gray-800 font-medium">
                                 {deadline}
                             </span>

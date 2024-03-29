@@ -44,4 +44,9 @@ class Student extends Model
     {
         return $this->belongsTo(Parents::class);
     }
+
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }
