@@ -18,7 +18,7 @@ class Assignment extends Model
         'deadline',
         'subject_id',
         'teacher_id',
-        'clasess_id',
+        'class_id',
     ];
 
     public function subject(): BelongsTo

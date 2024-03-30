@@ -16,10 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->unsignedBigInteger('class_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('class_id')->references('id')->on('classes')->onDelete('set null');
             $table->timestamps();
         });
     }

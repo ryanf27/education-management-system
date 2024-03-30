@@ -8,7 +8,8 @@ import { router } from "@inertiajs/react";
 
 const Edit = ({ schedules, classes }) => {
     const [values, setValues] = useState({
-        class_id: classes[0].name,
+        teacher_id: schedules.teacher_id,
+        class_id: schedules.class_id,
         day: schedules.day,
         start_time: schedules.start_time,
         end_time: schedules.end_time,
@@ -107,7 +108,7 @@ const Edit = ({ schedules, classes }) => {
 
                     <div>
                         <PrimaryButton type="submit">
-                            Create Assignment
+                            Create Schedule
                         </PrimaryButton>
                     </div>
                 </form>

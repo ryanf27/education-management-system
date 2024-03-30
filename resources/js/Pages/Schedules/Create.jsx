@@ -6,12 +6,13 @@ import SelectInput from "@/Components/SelectInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 
-const Create = ({ classes }) => {
+const Create = ({ classes, teacherId }) => {
     const [values, setValues] = useState({
         class_id: "",
         day: "",
         start_time: "",
         end_time: "",
+        teacher_id: teacherId,
     });
 
     function handleChange(e) {
@@ -109,7 +110,7 @@ const Create = ({ classes }) => {
 
                     <div>
                         <PrimaryButton type="submit">
-                            Create Assignment
+                            Create Schedule
                         </PrimaryButton>
                     </div>
                 </form>

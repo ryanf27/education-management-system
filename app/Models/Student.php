@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Traits\HasRoles;
 
 class Student extends Model
@@ -16,13 +17,12 @@ class Student extends Model
         'name',
         'address',
         'date_of_birth',
-        'class_id',
         'user_id',
     ];
 
-    public function classes(): HasMany
+    public function classes(): BelongsToMany
     {
-        return $this->hasMany(Classes::class, 'enrollments');
+        return $this->belongsToMany(Classes::class,);
     }
 
     public function assignments(): HasMany

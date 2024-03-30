@@ -52,7 +52,7 @@ export default function Sidebar() {
                                     Exam
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
-                                    Event
+                                    GPA
                                 </SidebarLink>
                                 <SidebarLink to={route("schedules.index")}>
                                     Schedule

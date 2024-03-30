@@ -14,13 +14,19 @@ class Schedules extends Model
 
     protected $fillable = [
         'class_id',
+        'teacher_id',
         'day',
         'start_time',
         'end_time',
     ];
 
-    public function class(): BelongsTo
+    public function classes(): BelongsTo
     {
         return $this->belongsTo(Classes::class);
+    }
+
+    public function teacher(): BelongsTo
+    {
+        return $this->classes->teacher();
     }
 }
