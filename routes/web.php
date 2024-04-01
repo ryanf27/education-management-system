@@ -101,6 +101,16 @@ Route::prefix('dashboard')->group(function () {
         Route::put('/course/{id}', [CourseController::class, 'update'])->name('courses.update');
         Route::delete('/course/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
     });
+    // assignments Routes 
+    Route::prefix('assignments')->group(function () {
+        Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
+        Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
+        Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+        Route::get('/{id}', [AssignmentController::class, 'show'])->name('assignments.show');
+        Route::get('/{id}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
+        Route::put('/{id}', [AssignmentController::class, 'update'])->name('assignments.update');
+        Route::delete('/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+    });
 
     // Teacher Routes
     Route::middleware('role:teacher|admin')->group(function () {
@@ -111,17 +121,6 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/teacher/{id}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
         Route::put('/teacher/{id}', [TeacherController::class, 'update'])->name('teachers.update');
         Route::delete('/teacher/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
-
-        // assignments Routes 
-        Route::prefix('assignments')->group(function () {
-            Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
-            Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
-            Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
-            Route::get('/{id}', [AssignmentController::class, 'show'])->name('assignments.show');
-            Route::get('/{id}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
-            Route::put('/{id}', [AssignmentController::class, 'update'])->name('assignments.update');
-            Route::delete('/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
-        });
     });
 
     // // Student Routes

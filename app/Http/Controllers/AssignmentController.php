@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Assignment;
 use App\Models\Classes;
 use App\Models\Subject;
+use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
@@ -16,11 +17,22 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $assignments = Assignment::all()->toArray();
+        $user = auth()->user();
+
+        $assignments = collect([]);
+
+        if ($user->hasRole('teacher')) {
+
+            $assignments = Assignment::where('teacher_id', $user->teacher->id)->get();
+        } elseif ($user->hasRole('student')) {
+            $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
+            $assignments = Assignment::whereIn('class_id', $enrollments)->get();
+        }
         return Inertia::render('Assignment/Index', [
             'assignments' => $assignments
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,6 +59,8 @@ class AssignmentController extends Controller
             'description' => 'required|string',
             'deadline' => 'required|date',
             'subject_id' => 'required|exists:subjects,id',
+            'class_id' => 'required|exists:classes,id',
+            'teacher_id' => 'required|exists:teachers,id',
         ]);
 
         Assignment::create($validatedData);

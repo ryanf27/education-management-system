@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dashboard from "../Dashboard";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
@@ -13,8 +13,21 @@ const Create = ({ subjects, teachers, classes }) => {
         deadline: "",
         subject_id: "",
         teacher_id: teachers,
-        classes_id: "",
+        class_id: "",
     });
+
+    const [filteredClasses, setFilteredClasses] = useState([]);
+
+    useEffect(() => {
+        if (values.subject_id !== "") {
+            const filtered = classes.filter(
+                (cls) => cls.subject_id === parseInt(values.subject_id)
+            );
+            setFilteredClasses(filtered);
+        } else {
+            setFilteredClasses(classes);
+        }
+    }, [values.subject_id, classes]);
 
     function handleChange(e) {
         const key = e.target.id;
@@ -85,6 +98,7 @@ const Create = ({ subjects, teachers, classes }) => {
                             required
                         />
                     </div>
+
                     <div className="">
                         <InputLabel
                             htmlFor="subject_id"
@@ -105,20 +119,23 @@ const Create = ({ subjects, teachers, classes }) => {
                                 </option>
                             ))}
                         </SelectInput>
+                    </div>
+                    <div className="">
                         <InputLabel
-                            htmlFor="subject_id"
+                            htmlFor="class_id"
                             className="block text-sm font-medium text-gray-700"
                         >
                             Class
                         </InputLabel>
+
                         <SelectInput
-                            id="classes_id"
+                            id="class_id"
                             onChange={handleChange}
-                            value={values.classes_id}
+                            value={values.class_id}
                             required
                         >
                             <option value="">Select a class</option>
-                            {classes.map((cls) => (
+                            {filteredClasses.map((cls) => (
                                 <option key={cls.id} value={cls.id}>
                                     {cls.name}
                                 </option>

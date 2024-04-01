@@ -6,31 +6,31 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Submission;
 use App\Models\Assignment;
+use App\Models\Enrollment;
 
 class SubmissionController extends Controller
 {
     public function index()
     {
         $submissions = Submission::with(['assignment', 'student'])->get();
-
-
-
         return Inertia::render('Submission/index', [
             'submissions' => $submissions,
-            // 'filters' => $request->all('search', 'trashed'),
-            // 'submissions' => Submission::with('assignment', 'student')
-            //     ->orderBy('created_at', 'desc')
-            //     ->filter($request->only('search', 'trashed'))
-            //     ->paginate()
-            //     ->withQueryString()
+
         ]);
     }
 
-
-
     public function create()
     {
-        return Inertia::render('Submission/Create');
+        $user = auth()->user();
+
+        $enrollments = Enrollment::where('student_id', '=', $user->student->id)->pluck('class_id');
+
+        $assignments = Assignment::whereIn('class_id', $enrollments)->get();
+
+        return Inertia::render('Submission/Create', [
+            'assignments' => $assignments,
+            'student_id' => $user->student->id,
+        ]);
     }
 
     public function store(Request $request)

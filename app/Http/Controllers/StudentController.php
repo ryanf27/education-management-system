@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enrollment;
 use App\Models\Student;
+use App\Models\Assignment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,11 +16,32 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate(10);
-        return Inertia::render('Student/index', [
-            'students' => $students
+        $user = auth()->user();
+        $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
+        $assignments = Assignment::whereIn('class_id', $enrollments)->get();
+
+
+        $studentListInClass = collect();
+
+        if ($user->student) {
+            $classId = Enrollment::where('student_id', $user->student->id)->first('class_id');
+
+
+            if ($classId) {
+                $studentListInClass = DB::table('students')
+                    ->join('enrollments', 'students.id', '=', 'enrollments.student_id')
+                    ->select('students.name')
+                    ->where('enrollments.class_id', '=', $classId->class_id)
+                    ->get();
+            }
+        }
+
+        return Inertia::render('Student/Index', [
+            'classmates' => $studentListInClass,
+            'assignments' => $assignments
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

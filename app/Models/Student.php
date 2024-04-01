@@ -22,7 +22,7 @@ class Student extends Model
 
     public function classes(): BelongsToMany
     {
-        return $this->belongsToMany(Classes::class,);
+        return $this->belongsToMany(Classes::class, 'enrollments');
     }
 
     public function assignments(): HasMany

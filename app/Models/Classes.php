@@ -25,7 +25,7 @@ class Classes extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class, 'enrollments');
     }
 
     public function teacher(): BelongsTo

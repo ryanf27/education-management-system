@@ -72,7 +72,7 @@ class SchedulesController extends Controller
      */
     public function show(Schedules $schedules)
     {
-        
+
         $classes = Classes::where('id', $schedules->class_id)->get()->first();
 
         return Inertia::render('Schedules/Show', [
