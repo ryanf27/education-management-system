@@ -49,7 +49,7 @@ export default function Sidebar() {
                                     My Class
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
-                                    Exam
+                                    Events
                                 </SidebarLink>
                                 <SidebarLink to="dashboard/teacher/assignment">
                                     GPA
@@ -76,7 +76,6 @@ export default function Sidebar() {
                             )}
                     </ul>
                     <ul className="hidden md:flex md:flex-col md:min-w-full x:hidden  flex-col list-none mt-6 mb-3 border-b-2 border-bottom-width: 2px;">
-                        <SidebarLink to="/">Settings</SidebarLink>
                         <SidebarLink to={route("profile.edit")}>
                             Profile
                         </SidebarLink>

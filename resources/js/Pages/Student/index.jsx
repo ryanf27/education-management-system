@@ -34,8 +34,38 @@ const Index = ({ classmates, assignments }) => {
                     {/* Classmates List */}
                     <div className="col-span-1 md:col-span-2 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <h3 className="text-xl font-semibold mb-4 text-indigo-600">
-                            test
+                            Upcoming Events
                         </h3>
+                        {/* Placeholder for events or schedule */}
+                        <div className="flex flex-col space-y-4">
+                            {/* Example Event 1 */}
+                            <div className="p-4 bg-blue-100 rounded-lg">
+                                <h5 className="text-lg font-semibold">
+                                    Math Exam
+                                </h5>
+                                <p className="text-sm text-gray-700">
+                                    March 15, 2024, at 10:00 AM
+                                </p>
+                            </div>
+                            {/* Example Event 2 */}
+                            <div className="p-4 bg-green-100 rounded-lg">
+                                <h5 className="text-lg font-semibold">
+                                    Science Project Presentation
+                                </h5>
+                                <p className="text-sm text-gray-700">
+                                    March 20, 2024, at 01:00 PM
+                                </p>
+                            </div>
+                            {/* More events can be dynamically added here */}
+                        </div>
+                        <div className="mt-4">
+                            <Link
+                                href="/"
+                                className="text-indigo-600 hover:text-indigo-800 transition duration-300"
+                            >
+                                View Full Schedule
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
