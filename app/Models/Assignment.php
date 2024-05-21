@@ -24,7 +24,7 @@ class Assignment extends Model
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
-    }
+    }   
 
 
     public function teacher(): belongsTo

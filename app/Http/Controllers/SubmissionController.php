@@ -46,9 +46,22 @@ class SubmissionController extends Controller
         return redirect()->route('submissions.index');
     }
 
+    public function grade(Request $request, $id)
+    {
+
+        $request->validate([
+            'grade' => 'required|numeric',
+        ]);
+
+        $submission =  Submission::findOrFail($id);
+        $submission->update(['score' => $request->grade]);
+
+        return redirect()->route('teachers.index');
+    }
+
     public function show($id)
     {
-        return Inertia::render('Submissions/Show', [
+        return Inertia::render('Submission/Show', [
             'submission' => Submission::with('assignment', 'student')->findOrFail($id)
         ]);
     }

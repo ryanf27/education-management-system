@@ -13,7 +13,8 @@ class Submission extends Model
     protected $fillable = [
         'file',
         'score',
-        'assignment_id'
+        'assignment_id',
+        'student_id'
     ];
 
     public function assignment(): BelongsTo

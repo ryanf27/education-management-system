@@ -76,11 +76,12 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [SubmissionController::class, 'index'])->name('submissions.index');
         Route::get('/create', [SubmissionController::class, 'create'])->name('submissions.create');
         Route::post('/', [SubmissionController::class, 'store'])->name('submissions.store');
+        Route::put('/{id}/grade', [SubmissionController::class, 'grade'])->name('submissions.grade');
         Route::get('/{id}', [SubmissionController::class, 'show'])->name('submissions.show');
         Route::get('/{id}/edit', [SubmissionController::class, 'edit'])->name('submissions.edit');
         Route::put('/{id}', [SubmissionController::class, 'update'])->name('submissions.update');
         Route::delete('/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
-    });
+    })->middleware('role:admin|teacher');
 
     // Erollments Routes
     Route::prefix('enrollments')->group(function () {

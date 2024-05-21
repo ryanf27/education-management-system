@@ -6,7 +6,6 @@ import Table from "@/Components/Table";
 import { Head, Link, router } from "@inertiajs/react";
 
 const Index = ({ assignments }) => {
-    console.log(assignments);
     const handleDelete = (id) => {
         router.delete(route("assignments.destroy", id));
     };

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Assignment;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
@@ -13,14 +15,32 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::paginate(10);
-        return Inertia::render('Teacher/index', [
-            'teachers' => $teachers
+        $teacherId = Auth::user()->id;
+
+        $assignments = Assignment::with(['submissions.student'])
+            ->where('teacher_id', $teacherId)
+            ->get();
+
+        $data = [];
+        foreach ($assignments as $assignment) {
+            foreach ($assignment->submissions as $submission) {
+                $data[] = [
+                    'id' => $submission->id,
+                    'student_name' => $submission->student ? $submission->student->name : 'No Student',
+                    'assignment_title' => $assignment->title,
+                    'submission_date' => $submission->created_at,
+                    'score' => $submission->score ?? '-',
+                ];
+            }
+        }
+
+        return Inertia::render('Teacher/Index', [
+            'data' => $data
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.       
      */
     public function create()
     {

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->text('file')->nullable();
             $table->float('score')->nullable();
             $table->unsignedBigInteger('assignment_id')->nullable();
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
             $table->timestamps();
         });
