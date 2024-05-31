@@ -15,7 +15,6 @@ class Teacher extends Model
     protected $fillable = [
         'name',
         'address',
-        'subject_id',
         'user_id',
         'class_id',
     ];
@@ -24,10 +23,7 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function subject(): HasMany
-    {
-        return $this->hasMany(Subject::class);
-    }
+
     public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class);

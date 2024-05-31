@@ -8,7 +8,7 @@ import {
     faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Index = ({ classmates, assignments }) => {
+const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
     return (
         <Dashboard>
             <Head title="Student Dashboard" />
@@ -25,14 +25,26 @@ const Index = ({ classmates, assignments }) => {
                         <h3 className="text-xl font-semibold mb-4 text-indigo-600">
                             Top Class Rank
                         </h3>
-                        {/* Placeholder content */}
-                        <p className="text-gray-700">
-                            Your current rank:{" "}
-                            <span className="font-bold">5th</span>
-                        </p>
+                        {topRanks.map((student, index) => (
+                            <p key={index} className="text-gray-700">
+                                {student.name} :
+                                <span
+                                    className={`font-medium ${
+                                        userRank === student.rank
+                                            ? "text-blue-500"
+                                            : ""
+                                    }`}
+                                >
+                                    {student.rank}th
+                                </span>
+                            </p>
+                        ))}
                     </div>
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                        <BarChart></BarChart>
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 col-span-1 md:col-span-2">
+                        <BarChart
+                            title="Assignment Performance"
+                            data={chartData}
+                        />
                     </div>
 
                     {/* Classmates List */}

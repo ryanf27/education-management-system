@@ -15,13 +15,8 @@ class Classes extends Model
     protected $fillable = [
         'name',
         'grade',
-        'subject_id',
     ];
 
-    public function subject(): BelongsTo
-    {
-        return $this->belongsTo(Subject::class);
-    }
 
     public function students(): BelongsToMany
     {

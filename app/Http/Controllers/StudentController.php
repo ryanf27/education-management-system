@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Assignment;
+use App\Models\Classes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,13 +18,29 @@ class StudentController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
-        $assignments = Assignment::whereIn('class_id', $enrollments)->get();
 
+        $student = $user->student;
+
+        $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
+
+        $assignments = Assignment::with('submissions')
+            ->whereIn('class_id', $enrollments)
+            ->get();
+
+        $chartData = [];
+
+        foreach ($assignments as $assignment) {
+            foreach ($assignment->submissions as $submission) {
+                $chartData[] = [
+                    'x-var' => Classes::where('id', $assignment->class_id)->first()->name,
+                    'y-var' => $submission->score,
+                ];
+            }
+        }
 
         $studentListInClass = collect();
 
-        if ($user->student) {
+        if ($student) {
             $classId = Enrollment::where('student_id', $user->student->id)->first('class_id');
 
 
@@ -33,13 +50,62 @@ class StudentController extends Controller
                     ->select('students.name')
                     ->where('enrollments.class_id', '=', $classId->class_id)
                     ->get();
+                $topRanks = $this->getTopRanks($classId->class_id);
+                $userRank = $this->getUserRank($student->id, $classId->class_id);
             }
         }
 
+
+
+
         return Inertia::render('Student/Index', [
             'classmates' => $studentListInClass,
-            'assignments' => $assignments
+            'assignments' => $assignments,
+            'chartData' => $chartData,
+            'topRanks' => $topRanks,
+            'userRank' => $userRank
         ]);
+    }
+
+    private function getTopRanks($classId)
+    {
+
+        $ranks = DB::table('students')
+            ->join('enrollments', 'students.id', '=', 'enrollments.student_id')
+            ->join('submissions', 'students.id', '=', 'submissions.student_id')
+            ->join('assignments', 'submissions.assignment_id', '=', 'assignments.id')
+            ->where('enrollments.class_id', $classId)
+            ->select('students.name', DB::raw('AVG(submissions.score) as average_score'))
+            ->groupBy('students.id', 'students.name')
+            ->orderByDesc('average_score')
+            ->limit(3) // Assuming top 3 ranks are required
+            ->get()
+            ->map(function ($student, $index) {
+                return [
+                    'name' => $student->name,
+                    'rank' => $index + 1,
+                ];
+            });
+
+        return $ranks;
+    }
+
+    private function getUserRank($studentId, $classId)
+    {
+        // Calculate the user's rank based on their average score
+        $ranks = DB::table('students')
+            ->join('enrollments', 'students.id', '=', 'enrollments.student_id')
+            ->join('submissions', 'students.id', '=', 'submissions.student_id')
+            ->join('assignments', 'submissions.assignment_id', '=', 'assignments.id')
+            ->where('enrollments.class_id', $classId)
+            ->select('students.id', DB::raw('AVG(submissions.score) as average_score'))
+            ->groupBy('students.id')
+            ->orderByDesc('average_score')
+            ->get();
+
+        $userRank = $ranks->pluck('id')->search($studentId) + 1;
+
+        return $userRank;
     }
 
 

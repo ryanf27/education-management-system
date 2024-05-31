@@ -16,15 +16,9 @@ class Assignment extends Model
         'title',
         'description',
         'deadline',
-        'subject_id',
         'teacher_id',
         'class_id',
     ];
-
-    public function subject(): BelongsTo
-    {
-        return $this->belongsTo(Subject::class);
-    }   
 
 
     public function teacher(): belongsTo

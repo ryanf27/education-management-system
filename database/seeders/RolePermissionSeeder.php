@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -20,7 +19,6 @@ class RolePermissionSeeder extends Seeder
         $adminRole = Role::whereName('admin')->first();
         $teacherRole = Role::whereName('teacher')->first();
         $studentRole = Role::whereName('student')->first();
-        $parentRole = Role::whereName('parent')->first();
 
         $adminRole->givePermissionTo(Permission::all());
 
@@ -39,11 +37,6 @@ class RolePermissionSeeder extends Seeder
             'view profile',
             'view schedule',
             'download materials',
-        ]);
-
-        $parentRole->givePermissionTo([
-            'view grades',
-            'view profile',
         ]);
     }
 }
