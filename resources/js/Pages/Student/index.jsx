@@ -6,41 +6,59 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCalendarAlt,
     faClipboardList,
+    faUserGraduate,
+    faChalkboardTeacher,
+    faSchool,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
+const Index = ({ classmates, assignments, chartData }) => {
     return (
         <Dashboard>
             <Head title="Student Dashboard" />
             <div className="container mx-auto p-6">
-                <header className="mb-10">
-                    <h1 className="text-3xl font-bold text-gray-800">
+                <header className="mb-6">
+                    <h1 className="text-3xl font-medium text-gray-800">
                         Student Dashboard
                     </h1>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Top Class Rank */}
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                        <h3 className="text-xl font-semibold mb-4 text-indigo-600">
-                            Top Class Rank
-                        </h3>
-                        {topRanks.map((student, index) => (
-                            <p key={index} className="text-gray-700">
-                                {student.name} :
-                                <span
-                                    className={`font-medium ${
-                                        userRank === student.rank
-                                            ? "text-blue-500"
-                                            : ""
-                                    }`}
-                                >
-                                    {student.rank}th
-                                </span>
-                            </p>
-                        ))}
+                {/* Row of three widgets */}
+                <div className="flex flex-col md:flex-row gap-5 justify-around mb-10">
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center justify-center md:w-1/3">
+                        <FontAwesomeIcon
+                            icon={faUserGraduate}
+                            className="text-indigo-400 text-4xl mb-2"
+                        />
+                        <h4 className="text-lg font-semibold  text-indigo-400">
+                            Students
+                        </h4>
+                        <p className="text-2xl font-semibold">3500</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 col-span-1 md:col-span-2">
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center justify-center md:w-1/3">
+                        <FontAwesomeIcon
+                            icon={faChalkboardTeacher}
+                            className="text-indigo-400 text-4xl mb-2"
+                        />
+                        <h4 className="text-lg font-semibold  text-indigo-400">
+                            Teachers
+                        </h4>
+                        <p className="text-2xl font-semibold">150</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center justify-center md:w-1/3">
+                        <FontAwesomeIcon
+                            icon={faSchool}
+                            className="text-indigo-400 text-4xl mb-2"
+                        />
+                        <h4 className="text-lg font-semibold  text-indigo-400">
+                            Classes
+                        </h4>
+                        <p className="text-2xl font-semibold">50</p>
+                    </div>
+                </div>
+
+                {/* chart */}
+                <div className="flex flex-col md:flex-row flex-wrap gap-6">
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-1 md:flex-none md:w-3/4">
                         <BarChart
                             title="Assignment Performance"
                             data={chartData}
@@ -48,7 +66,7 @@ const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
                     </div>
 
                     {/* Classmates List */}
-                    <div className="col-span-1 md:col-span-2 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-1">
                         <h3 className="text-xl font-semibold mb-4 text-indigo-600">
                             Upcoming Events
                         </h3>
@@ -72,7 +90,15 @@ const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
                                     March 20, 2024, at 01:00 PM
                                 </p>
                             </div>
-                            {/* More events can be dynamically added here */}
+                            {/* Example Event 3 */}
+                            <div className="p-4 bg-blue-100 rounded-lg">
+                                <h5 className="text-lg font-semibold">
+                                    hackathon
+                                </h5>
+                                <p className="text-sm text-gray-700">
+                                    June 15, 2024, at 10:00 AM
+                                </p>
+                            </div>
                         </div>
                         <div className="mt-4">
                             <Link
@@ -103,15 +129,15 @@ const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
                                         <Link
                                             href={route("submissions.create")}
                                             key={index}
-                                            className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300"
+                                            className="bg-gray-100 p-5 rounded-lg shadow-md hover:shadow-lg transition duration-300"
                                         >
-                                            <h4 className="font-semibold text-lg mb-2">
+                                            <h4 className="font-semibold text-lg mb-2 text-gray-800">
                                                 {assignment.title}
                                             </h4>
                                             <p className="text-sm text-gray-600 mb-4">
                                                 {assignment.description}
                                             </p>
-                                            <div className="flex items-center justify-between text-sm">
+                                            <div className="flex items-center justify-between text-sm text-gray-600">
                                                 <span className="flex items-center">
                                                     <FontAwesomeIcon
                                                         icon={faCalendarAlt}
@@ -131,8 +157,8 @@ const Index = ({ classmates, assignments, chartData, userRank, topRanks }) => {
                         </div>
                     </div>
 
-                    {/* classmate list */}
-                    <div className="mt-2 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    {/* Classmate List */}
+                    <div className="mt-6 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <h3 className="text-xl font-semibold mb-4 text-indigo-600">
                             Classmates
                         </h3>

@@ -63,8 +63,8 @@ class StudentSeeder extends Seeder
             $user->assignRole('student');
 
             student::factory()
-                ->has(Enrollment::factory()->count(6))
-                ->has(Submission::factory()->count(6))
+                ->has(Enrollment::factory()->count(4))
+                ->has(Submission::factory()->count(4))
                 ->create([
                     'name' => $data['name'],
                     'address' => $data['address'],

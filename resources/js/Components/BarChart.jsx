@@ -20,7 +20,7 @@ const BarChartComponent = ({ title, data }) => {
                 {title}
             </h3>
             <div className="w-full h-96">
-                <ResponsiveContainer width={750} height={400}>
+                <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="5 5" />
                         <XAxis
@@ -35,7 +35,7 @@ const BarChartComponent = ({ title, data }) => {
                                 value="Class"
                                 offset={-10}
                                 position="bottom"
-                                color="red"
+                                fill="#8884d8"
                             />
                         </XAxis>
                         <YAxis>
@@ -43,6 +43,7 @@ const BarChartComponent = ({ title, data }) => {
                                 value="score"
                                 angle={-90}
                                 position="insideLeft"
+                                fill="#8884d8"
                             />
                         </YAxis>
                         <Bar dataKey="y-var" fill="#8884d8" />
