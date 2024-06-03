@@ -54,9 +54,6 @@ class StudentController extends Controller
             }
         }
 
-
-
-
         return Inertia::render('Student/Index', [
             'classmates' => $studentListInClass,
             'assignments' => $assignments,
@@ -64,8 +61,6 @@ class StudentController extends Controller
 
         ]);
     }
-
-
 
 
     /**

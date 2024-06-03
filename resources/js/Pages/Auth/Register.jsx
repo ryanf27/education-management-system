@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -7,14 +7,17 @@ import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Register() {
+export default function Register({ classes }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
         password_confirmation: "",
         role: "",
+        class_id: "",
     });
+
+    const [classId, setClassId] = useState("");
 
     useEffect(() => {
         return () => {
@@ -24,6 +27,11 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
+        if (data.role === "teacher") {
+            setData("class_id", classId);
+        } else {
+            setData("class_id", "");
+        }
         post(route("register"));
     };
 
@@ -44,7 +52,6 @@ export default function Register() {
                         <option value="">Select Role</option>
                         <option value="teacher">Teacher</option>
                         <option value="student">Student</option>
-                        <option value="student">Parrent</option>
                     </SelectInput>
                     <InputError message={errors.role} className="mt-2" />
                 </div>
@@ -65,6 +72,30 @@ export default function Register() {
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
+
+                {data.role === "teacher" && (
+                    <div className="mt-4">
+                        <InputLabel htmlFor="class" value="Class" />
+                        <SelectInput
+                            id="class"
+                            name="class"
+                            value={classId}
+                            onChange={(e) => setClassId(e.target.value)}
+                            required={data.role === "teacher"}
+                        >
+                            <option value="">Select Class</option>
+                            {classes.map((cls) => (
+                                <option key={cls.id} value={cls.id}>
+                                    {cls.name} (Grade {cls.grade})
+                                </option>
+                            ))}
+                        </SelectInput>
+                        <InputError
+                            message={errors.class_id}
+                            className="mt-2"
+                        />
+                    </div>
+                )}
 
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />

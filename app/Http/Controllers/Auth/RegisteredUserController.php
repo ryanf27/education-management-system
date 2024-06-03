@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classes;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +17,6 @@ use Spatie\Permission\Models\Role;
 
 use App\Models\Teacher;
 use App\Models\Student;
-use App\Models\Parents;
 
 
 
@@ -28,7 +27,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $classes = Classes::all();
+        return Inertia::render('Auth/Register', ['classes' => $classes]);
     }
 
     /**
@@ -60,7 +60,6 @@ class RegisteredUserController extends Controller
                 Student::create([
                     'user_id' => $user->id,
                     'name' => $request->name,
-                    'class' => $request->class ?? null,
                 ]);
                 $user->assignRole($role);
                 break;
@@ -68,13 +67,7 @@ class RegisteredUserController extends Controller
                 Teacher::create([
                     'user_id' => $user->id,
                     'name' => $request->name,
-                ]);
-                $user->assignRole($role);
-                break;
-            case 'parent':
-                Parents::create([
-                    'user_id' => $user->id,
-                    'name' => $request->name,
+                    'class_id' => $request->class_id ?? null,
                 ]);
                 $user->assignRole($role);
                 break;

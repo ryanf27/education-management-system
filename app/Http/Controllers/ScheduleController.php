@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Classes;
 use App\Models\Schedule;
 use App\Models\Enrollment;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
-
-class SchedulesController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,22 +32,28 @@ class SchedulesController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $user = auth()->user();
-        $teacherId = $user->teacher->id;
-        $classes = Classes::all();
+
+        $user = Auth::user();
+
+        if (!$user->can('create schedule')) {
+            return response()->json(['error' => 'Unauthorized to create schedule'], 403);
+        }
+
+        $teacherClass = $user->teacher->class_id;
+
+        $classes = Classes::where('id', $teacherClass)->get();
+
 
         return Inertia::render('Schedules/Create', [
             'classes' => $classes,
-            'teacherId' => $teacherId,
+            'teacherId' => $teacherClass,
         ]);
     }
-
 
     /**
      * Store a newly created resource in storage.

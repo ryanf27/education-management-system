@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'view grades']);
         Permission::create(['name' => 'view profile']);
         Permission::create(['name' => 'view schedule']);
+        Permission::create(['name' => 'create schedule']);
 
         Permission::create(['name' => 'edit profile']);
         Permission::create(['name' => 'download materials']);

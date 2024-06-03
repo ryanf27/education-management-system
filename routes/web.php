@@ -8,7 +8,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -62,14 +62,14 @@ Route::prefix('dashboard')->group(function () {
 
     // // Schedule Routes
     Route::prefix('schedules')->group(function () {
-        Route::get('/', [SchedulesController::class, 'index'])->name('schedules.index');
-        Route::get('/create', [SchedulesController::class, 'create'])->name('schedules.create');
-        Route::post('/', [SchedulesController::class, 'store'])->name('schedules.store');
-        Route::get('/{schedules}', [SchedulesController::class, 'show'])->name('schedules.show');
-        Route::get('/{schedules}/edit', [SchedulesController::class, 'edit'])->name('schedules.edit');
-        Route::put('/{schedules}', [SchedulesController::class, 'update'])->name('schedules.update');
-        Route::delete('/{schedules}', [SchedulesController::class, 'destroy'])->name('schedules.destroy');
-    });
+        Route::get('/', [ScheduleController::class, 'index'])->name('schedules.index');
+        Route::get('/create', [ScheduleController::class, 'create'])->name('schedules.create');
+        Route::post('/', [ScheduleController::class, 'store'])->name('schedules.store');
+        Route::get('/{schedules}', [ScheduleController::class, 'show'])->name('schedules.show');
+        Route::get('/{schedules}/edit', [ScheduleController::class, 'edit'])->name('schedules.edit');
+        Route::put('/{schedules}', [ScheduleController::class, 'update'])->name('schedules.update');
+        Route::delete('/{schedules}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
+    })->middleware('role:admin|teacher');
 
     // Submissions Routes
     Route::prefix('submissions')->group(function () {

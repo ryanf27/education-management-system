@@ -30,6 +30,7 @@ class RolePermissionSeeder extends Seeder
             'view profile',
             'edit profile',
             'view schedule',
+            'create schedule',
         ]);
 
         $studentRole->givePermissionTo([

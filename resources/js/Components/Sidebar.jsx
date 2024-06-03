@@ -54,9 +54,6 @@ export default function Sidebar() {
                                 <SidebarLink to="dashboard/teacher/assignment">
                                     GPA
                                 </SidebarLink>
-                                <SidebarLink to={route("schedules.index")}>
-                                    Schedule
-                                </SidebarLink>
                             </>
                         )}
                         {roles === "parent" && (
