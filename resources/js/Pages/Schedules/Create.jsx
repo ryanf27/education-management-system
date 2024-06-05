@@ -13,6 +13,9 @@ const Create = ({ classes, teacherId }) => {
         start_time: "",
         end_time: "",
         teacher_id: teacherId,
+        room_name: "",
+        room_location: "",
+        room_capacity: "",
     });
 
     function handleChange(e) {
@@ -33,9 +36,10 @@ const Create = ({ classes, teacherId }) => {
         <Dashboard>
             <div className="max-w-4xl mx-auto py-10">
                 <h2 className="text-2xl font-semibold mb-5">
-                    Create schedules
+                    Create Schedule and Room
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* Class Selection */}
                     <InputLabel
                         htmlFor="class_id"
                         className="block text-sm font-medium text-gray-700"
@@ -55,6 +59,8 @@ const Create = ({ classes, teacherId }) => {
                             </option>
                         ))}
                     </SelectInput>
+
+                    {/* Day Selection */}
                     <InputLabel
                         htmlFor="day"
                         className="block text-sm font-medium text-gray-700"
@@ -77,12 +83,13 @@ const Create = ({ classes, teacherId }) => {
                         <option value="Sunday">Sunday</option>
                     </SelectInput>
 
+                    {/* Time Fields */}
                     <div>
                         <InputLabel
                             htmlFor="start_time"
                             className="block text-sm font-medium text-gray-700"
                         >
-                            start time
+                            Start Time
                         </InputLabel>
                         <TextInput
                             type="time"
@@ -97,7 +104,7 @@ const Create = ({ classes, teacherId }) => {
                             htmlFor="end_time"
                             className="block text-sm font-medium text-gray-700"
                         >
-                            end time
+                            End Time
                         </InputLabel>
                         <TextInput
                             type="time"
@@ -108,9 +115,54 @@ const Create = ({ classes, teacherId }) => {
                         />
                     </div>
 
+                    {/* Room Fields */}
+                    <div>
+                        <InputLabel
+                            htmlFor="room_name"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Room Name
+                        </InputLabel>
+                        <TextInput
+                            type="text"
+                            id="room_name"
+                            onChange={handleChange}
+                            value={values.room_name}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <InputLabel
+                            htmlFor="room_location"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Room Location
+                        </InputLabel>
+                        <TextInput
+                            type="text"
+                            id="room_location"
+                            onChange={handleChange}
+                            value={values.room_location}
+                        />
+                    </div>
+                    <div>
+                        <InputLabel
+                            htmlFor="room_capacity"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Room Capacity
+                        </InputLabel>
+                        <TextInput
+                            type="number"
+                            id="room_capacity"
+                            onChange={handleChange}
+                            value={values.room_capacity}
+                        />
+                    </div>
+
                     <div>
                         <PrimaryButton type="submit">
-                            Create Schedule
+                            Create Schedule and Room
                         </PrimaryButton>
                     </div>
                 </form>

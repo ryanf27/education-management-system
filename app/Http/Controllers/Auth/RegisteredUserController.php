@@ -68,6 +68,7 @@ class RegisteredUserController extends Controller
                     'user_id' => $user->id,
                     'name' => $request->name,
                     'class_id' => $request->class_id ?? null,
+
                 ]);
                 $user->assignRole($role);
                 break;

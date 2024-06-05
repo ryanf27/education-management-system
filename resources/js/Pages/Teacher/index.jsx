@@ -261,7 +261,7 @@ const Index = () => {
                                             onClick={() => openModal(d)}
                                             className="text-indigo-600 hover:text-indigo-800 transition duration-300"
                                         >
-                                            Grade
+                                            Evaluate Assignment
                                         </button>
                                     </td>
                                 </tr>

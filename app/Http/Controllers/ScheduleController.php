@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Classes;
 use App\Models\Schedule;
 use App\Models\Enrollment;
+use App\Models\Teacher;
+use App\Models\Room;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +19,10 @@ class ScheduleController extends Controller
     public function index()
     {
         $user = auth()->user();
-
+        $classes = Classes::all();
+        $teachers = Teacher::all();
+        $schedules = Schedule::with('room')->get();
+        $rooms = Room::all();
         $schedules = collect([]);
 
         if ($user->hasRole('teacher')) {
@@ -28,7 +33,10 @@ class ScheduleController extends Controller
         }
 
         return Inertia::render('Schedules/Index', [
-            'schedules' => $schedules,
+            'schedules' => $schedules,  
+            'classes' => $classes,
+            'teachers' => $teachers,
+            'rooms' => $rooms,
         ]);
     }
 
@@ -37,17 +45,15 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-
         $user = Auth::user();
 
         if (!$user->can('create schedule')) {
             return response()->json(['error' => 'Unauthorized to create schedule'], 403);
         }
 
-        $teacherClass = $user->teacher->class_id;
+        $teacherClass = Teacher::where('user_id', $user->id)->first()->class_id;
 
         $classes = Classes::where('id', $teacherClass)->get();
-
 
         return Inertia::render('Schedules/Create', [
             'classes' => $classes,

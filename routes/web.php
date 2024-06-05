@@ -10,6 +10,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,6 +49,8 @@ Route::prefix('dashboard')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    Route::resource('rooms', RoomController::class);
 
     // Anouncment Route
     Route::prefix('announcement')->group(function () {
@@ -102,7 +105,7 @@ Route::prefix('dashboard')->group(function () {
         Route::put('/course/{id}', [CourseController::class, 'update'])->name('courses.update');
         Route::delete('/course/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
     });
-    // assignments Routes 
+    // assignments Routes
     Route::prefix('assignments')->group(function () {
         Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
         Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');

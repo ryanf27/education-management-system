@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -17,8 +17,6 @@ export default function Register({ classes }) {
         class_id: "",
     });
 
-    const [classId, setClassId] = useState("");
-
     useEffect(() => {
         return () => {
             reset("password", "password_confirmation");
@@ -27,11 +25,13 @@ export default function Register({ classes }) {
 
     const submit = (e) => {
         e.preventDefault();
+
         if (data.role === "teacher") {
-            setData("class_id", classId);
+            setData("class_id", data.class_id);
         } else {
             setData("class_id", "");
         }
+
         post(route("register"));
     };
 
@@ -75,12 +75,14 @@ export default function Register({ classes }) {
 
                 {data.role === "teacher" && (
                     <div className="mt-4">
-                        <InputLabel htmlFor="class" value="Class" />
+                        <InputLabel htmlFor="class_id" value="Class" />
                         <SelectInput
-                            id="class"
-                            name="class"
-                            value={classId}
-                            onChange={(e) => setClassId(e.target.value)}
+                            id="class_id"
+                            name="class_id"
+                            value={data.class_id}
+                            onChange={(e) =>
+                                setData("class_id", e.target.value)
+                            }
                             required={data.role === "teacher"}
                         >
                             <option value="">Select Class</option>
