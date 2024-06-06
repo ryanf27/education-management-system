@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Schedule;
 use App\Models\Assignment;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,16 +16,32 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teacherId = Auth::user()->id;
+        $user = Auth::user();
+
+        $teacherId = $user->teacher->id;
+
+        $scheduleClasspivot = [];
+
+        $schedules = Schedule::with(['classes', 'room'])->where('teacher_id', $teacherId)->get();
+
+        foreach ($schedules as $schedule) {
+            $scheduleClasspivot[] = [
+                'class' => $schedule->classes->name,
+                'room' => $schedule->room->name,
+                'day' => $schedule->day,
+                'time' => $schedule->start_time,
+            ];
+        }
 
         $assignments = Assignment::with(['submissions.student'])
             ->where('teacher_id', $teacherId)
             ->get();
 
-        $data = [];
+        $SubmissionAssignmentPivotData = [];
+
         foreach ($assignments as $assignment) {
             foreach ($assignment->submissions as $submission) {
-                $data[] = [
+                $SubmissionAssignmentPivotData[] = [
                     'id' => $submission->id,
                     'student_name' => $submission->student ? $submission->student->name : 'No Student',
                     'assignment_title' => $assignment->title,
@@ -35,12 +52,13 @@ class TeacherController extends Controller
         }
 
         return Inertia::render('Teacher/Index', [
-            'data' => $data
+            'data' => $SubmissionAssignmentPivotData,
+            'schedules' => $scheduleClasspivot
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.       
+     * Show the form for creating a new resource.
      */
     public function create()
     {

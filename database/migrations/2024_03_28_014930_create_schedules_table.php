@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
 
+            $table->unsignedBigInteger('room_id');
+
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
 
             $table->time('start_time');

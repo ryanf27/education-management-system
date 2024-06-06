@@ -19,10 +19,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $classes = Classes::all();
-        $teachers = Teacher::all();
-        $schedules = Schedule::with('room')->get();
-        $rooms = Room::all();
+
         $schedules = collect([]);
 
         if ($user->hasRole('teacher')) {
@@ -33,10 +30,7 @@ class ScheduleController extends Controller
         }
 
         return Inertia::render('Schedules/Index', [
-            'schedules' => $schedules,  
-            'classes' => $classes,
-            'teachers' => $teachers,
-            'rooms' => $rooms,
+            'schedules' => $schedules,
         ]);
     }
 
@@ -51,6 +45,8 @@ class ScheduleController extends Controller
             return response()->json(['error' => 'Unauthorized to create schedule'], 403);
         }
 
+        $rooms = Room::all();
+
         $teacherClass = Teacher::where('user_id', $user->id)->first()->class_id;
 
         $classes = Classes::where('id', $teacherClass)->get();
@@ -58,6 +54,7 @@ class ScheduleController extends Controller
         return Inertia::render('Schedules/Create', [
             'classes' => $classes,
             'teacherId' => $teacherClass,
+            'rooms' => $rooms,
         ]);
     }
 
@@ -66,13 +63,18 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = Auth::user();
+
         $validatedData = $request->validate([
-            'teacher_id' => 'required',
             'class_id' => 'required',
             'day' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
+            'room_id' => 'required',
         ]);
+
+        $validatedData['teacher_id'] = $user->teacher->id;
 
         Schedule::create($validatedData);
 
@@ -90,7 +92,6 @@ class ScheduleController extends Controller
         return Inertia::render('Schedules/Show', [
             'schedules' => $schedules,
             'classes' => $classes,
-
         ]);
     }
 
@@ -105,7 +106,6 @@ class ScheduleController extends Controller
         return Inertia::render('Schedules/Edit', [
             'schedules' => $schedules,
             'classes' => $classes,
-
         ]);
     }
 

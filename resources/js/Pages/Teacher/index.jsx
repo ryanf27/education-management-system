@@ -23,7 +23,7 @@ import {
     Line,
 } from "recharts";
 
-const Index = () => {
+const Index = ({ schedules }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSubmission, setSelectedSubmission] = useState(null);
     const [values, setValues] = useState({
@@ -144,6 +144,103 @@ const Index = () => {
                     </div>
                 </div>
 
+                <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 mb-10">
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-600">
+                        Schedule
+                    </h3>
+                    <table className="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Class
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Room
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Day
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Start Time
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {schedules.map((d, i) => (
+                                <tr key={i}>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.class}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.room}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.day}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.time}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 mb-10">
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-600">
+                        Submission Details
+                    </h3>
+                    <table className="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Student Name
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Assignment Title
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Deadline
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Score
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((d, i) => (
+                                <tr key={i}>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.student_name}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.assignment_title}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {new Date(
+                                            d.submission_date
+                                        ).toLocaleDateString()}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {d.score}
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <button
+                                            onClick={() => openModal(d)}
+                                            className="text-indigo-600 hover:text-indigo-800 transition duration-300"
+                                        >
+                                            Evaluate Assignment
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
                 {/* Attendance Records */}
                 <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 mb-10">
                     <h3 className="text-xl font-semibold mb-4 text-indigo-600">
@@ -215,60 +312,6 @@ const Index = () => {
                 </div>
 
                 {/* Submission Details */}
-                <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <h3 className="text-xl font-semibold mb-4 text-indigo-600">
-                        Submission Details
-                    </h3>
-                    <table className="min-w-full leading-normal">
-                        <thead>
-                            <tr>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Student Name
-                                </th>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Assignment Title
-                                </th>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Deadline
-                                </th>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Score
-                                </th>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((d, i) => (
-                                <tr key={i}>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        {d.student_name}
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        {d.assignment_title}
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        {new Date(
-                                            d.submission_date
-                                        ).toLocaleDateString()}
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        {d.score}
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <button
-                                            onClick={() => openModal(d)}
-                                            className="text-indigo-600 hover:text-indigo-800 transition duration-300"
-                                        >
-                                            Evaluate Assignment
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
 
                 {/* Modal */}
                 <Modal show={isModalOpen} onClose={closeModal}>

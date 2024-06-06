@@ -6,16 +6,14 @@ import SelectInput from "@/Components/SelectInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 
-const Create = ({ classes, teacherId }) => {
+const Create = ({ classes, teacherId, rooms }) => {
     const [values, setValues] = useState({
         class_id: "",
         day: "",
         start_time: "",
         end_time: "",
         teacher_id: teacherId,
-        room_name: "",
-        room_location: "",
-        room_capacity: "",
+        room_id: "",
     });
 
     function handleChange(e) {
@@ -29,15 +27,14 @@ const Create = ({ classes, teacherId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         router.post(route("schedules.store"), values);
     };
 
     return (
         <Dashboard>
             <div className="max-w-4xl mx-auto py-10">
-                <h2 className="text-2xl font-semibold mb-5">
-                    Create Schedule and Room
-                </h2>
+                <h2 className="text-2xl font-semibold mb-5">Create Schedule</h2>
                 <form onSubmit={handleSubmit} className="space-y-8">
                     {/* Class Selection */}
                     <InputLabel
@@ -118,51 +115,30 @@ const Create = ({ classes, teacherId }) => {
                     {/* Room Fields */}
                     <div>
                         <InputLabel
-                            htmlFor="room_name"
+                            htmlFor="room_id"
                             className="block text-sm font-medium text-gray-700"
                         >
-                            Room Name
+                            Room
                         </InputLabel>
-                        <TextInput
+                        <SelectInput
                             type="text"
-                            id="room_name"
+                            id="room_id"
                             onChange={handleChange}
-                            value={values.room_name}
+                            value={values.room_id}
                             required
-                        />
-                    </div>
-                    <div>
-                        <InputLabel
-                            htmlFor="room_location"
-                            className="block text-sm font-medium text-gray-700"
                         >
-                            Room Location
-                        </InputLabel>
-                        <TextInput
-                            type="text"
-                            id="room_location"
-                            onChange={handleChange}
-                            value={values.room_location}
-                        />
-                    </div>
-                    <div>
-                        <InputLabel
-                            htmlFor="room_capacity"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Room Capacity
-                        </InputLabel>
-                        <TextInput
-                            type="number"
-                            id="room_capacity"
-                            onChange={handleChange}
-                            value={values.room_capacity}
-                        />
+                            <option value="">Select the room</option>
+                            {rooms.map((room) => (
+                                <option key={room.id} value={room.id}>
+                                    {room.name}
+                                </option>
+                            ))}
+                        </SelectInput>
                     </div>
 
                     <div>
                         <PrimaryButton type="submit">
-                            Create Schedule and Room
+                            Create Schedule
                         </PrimaryButton>
                     </div>
                 </form>

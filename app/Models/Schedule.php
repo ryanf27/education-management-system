@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Schedule extends Model
 {
@@ -16,6 +15,7 @@ class Schedule extends Model
     protected $fillable = [
         'class_id',
         'teacher_id',
+        'room_id',
         'day',
         'start_time',
         'end_time',
@@ -23,7 +23,7 @@ class Schedule extends Model
 
     public function Classes(): BelongsTo
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 
     public function teacher(): BelongsTo
@@ -31,8 +31,9 @@ class Schedule extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-    public function enrollments(): HasMany
+
+    public function room(): BelongsTo
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }
