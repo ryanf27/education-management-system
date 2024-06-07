@@ -84,8 +84,7 @@ class RegisteredUserController extends Controller
                 return redirect()->route('teachers.index');
             case 'student':
                 return redirect()->route('students.index');
-            case 'parent':
-                return redirect()->route('parents.index');
+
             default:
                 return redirect()->route('/');
         }

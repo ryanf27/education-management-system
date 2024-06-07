@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Schedule;
 use App\Models\Assignment;
-use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
@@ -19,10 +18,6 @@ class TeacherController extends Controller
         try {
 
             $user = auth()->user();
-
-            if (!$user || !$user->is_authenticated) {
-                return redirect()->route('login');
-            }
 
             $teacherId = $user->teacher->id;
 

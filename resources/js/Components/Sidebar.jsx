@@ -21,7 +21,7 @@ export default function Sidebar() {
                     </Link>
                     <ul className="md:flex-col md:min-w-full flex flex-col list-none mt-6 mb-3 border-b-2 border-bottom-width: 2px;">
                         {/* Inline conditional logic for role-based rendering */}
-                        <SidebarLink to={`/dashboard/${auth.roles}`}>
+                        <SidebarLink to={`/dashboard/${auth.roles}s`}>
                             Home
                         </SidebarLink>
                         <SidebarLink to={route("announcement.index")}>
@@ -48,29 +48,17 @@ export default function Sidebar() {
                                 <SidebarLink to={route("enrollments.index")}>
                                     My Class
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/teacher/assignment">
+                                <SidebarLink to="dashboard/teachers/assignment">
                                     Events
                                 </SidebarLink>
-                                <SidebarLink to="dashboard/teacher/assignment">
+                                <SidebarLink to="dashboard/teachers/assignment">
                                     GPA
                                 </SidebarLink>
                             </>
                         )}
-                        {roles === "parent" && (
-                            <>
-                                <SidebarLink to="dashboard/child-progress">
-                                    Child's Progress
-                                </SidebarLink>
-                                <SidebarLink to="dashboard/meetings">
-                                    Meetings
-                                </SidebarLink>
-                            </>
+                        {roles !== "teacher" && roles !== "student" && (
+                            <SidebarLink to="/">Home</SidebarLink>
                         )}
-                        {roles !== "teacher" &&
-                            roles !== "student" &&
-                            roles !== "parent" && (
-                                <SidebarLink to="/">Home</SidebarLink>
-                            )}
                     </ul>
                     <ul className="hidden md:flex md:flex-col md:min-w-full x:hidden  flex-col list-none mt-6 mb-3 border-b-2 border-bottom-width: 2px;">
                         <SidebarLink to={route("profile.edit")}>
