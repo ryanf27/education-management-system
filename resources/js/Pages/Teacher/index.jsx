@@ -23,7 +23,8 @@ import {
     Line,
 } from "recharts";
 
-const Index = ({ schedules }) => {
+const Index = ({ schedules, submissions }) => {
+    console.log(submissions);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSubmission, setSelectedSubmission] = useState(null);
     const [values, setValues] = useState({

@@ -16,45 +16,54 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        try {
 
-        $teacherId = $user->teacher->id;
+            $user = auth()->user();
 
-        $scheduleClasspivot = [];
+            if (!$user || !$user->is_authenticated) {
+                return redirect()->route('login');
+            }
 
-        $schedules = Schedule::with(['classes', 'room'])->where('teacher_id', $teacherId)->get();
+            $teacherId = $user->teacher->id;
 
-        foreach ($schedules as $schedule) {
-            $scheduleClasspivot[] = [
-                'class' => $schedule->classes->name,
-                'room' => $schedule->room->name,
-                'day' => $schedule->day,
-                'time' => $schedule->start_time,
-            ];
-        }
+            $scheduleClasspivot = [];
 
-        $assignments = Assignment::with(['submissions.student'])
-            ->where('teacher_id', $teacherId)
-            ->get();
+            $schedules = Schedule::with(['classes', 'room'])->where('teacher_id', $teacherId)->get();
 
-        $SubmissionAssignmentPivotData = [];
-
-        foreach ($assignments as $assignment) {
-            foreach ($assignment->submissions as $submission) {
-                $SubmissionAssignmentPivotData[] = [
-                    'id' => $submission->id,
-                    'student_name' => $submission->student ? $submission->student->name : 'No Student',
-                    'assignment_title' => $assignment->title,
-                    'submission_date' => $submission->created_at,
-                    'score' => $submission->score ?? '-',
+            foreach ($schedules as $schedule) {
+                $scheduleClasspivot[] = [
+                    'class' => $schedule->classes->name,
+                    'room' => $schedule->room->name,
+                    'day' => $schedule->day,
+                    'time' => $schedule->start_time,
                 ];
             }
-        }
 
-        return Inertia::render('Teacher/Index', [
-            'data' => $SubmissionAssignmentPivotData,
-            'schedules' => $scheduleClasspivot
-        ]);
+            $assignments = Assignment::with(['submissions.student'])
+                ->where('teacher_id', $teacherId)
+                ->get();
+
+            $SubmissionAssignmentPivotData = [];
+
+            foreach ($assignments as $assignment) {
+                foreach ($assignment->submissions as $submission) {
+                    $SubmissionAssignmentPivotData[] = [
+                        'id' => $submission->id,
+                        'student_name' => $submission->student ? $submission->student->name : 'No Student',
+                        'assignment_title' => $assignment->title,
+                        'submission_date' => $submission->created_at,
+                        'score' => $submission->score ?? '-',
+                    ];
+                }
+            }
+
+            return Inertia::render('Teacher/Index', [
+                'submissions' => $SubmissionAssignmentPivotData,
+                'schedules' => $scheduleClasspivot
+            ]);
+        } catch (\Throwable $e) {
+            return response()->error($e->getMessage(), 403);
+        }
     }
 
     /**

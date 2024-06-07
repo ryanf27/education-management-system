@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Assignment;
 use App\Models\Classes;
-use App\Models\Subject;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
+
 
 class AssignmentController extends Controller
 {
@@ -17,20 +17,28 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
 
-        $assignments = collect([]);
+        try {
+            $user = auth()->user();
 
-        if ($user->hasRole('teacher')) {
+            if (!$user) {
+                return redirect()->route('login');
+            }
 
-            $assignments = Assignment::where('teacher_id', $user->teacher->id)->get();
-        } elseif ($user->hasRole('student')) {
-            $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
-            $assignments = Assignment::whereIn('class_id', $enrollments)->get();
+            $assignments = collect([]);
+
+            if ($user->hasRole('teacher')) {
+                $assignments = Assignment::where('teacher_id', $user->teacher->id)->get();
+            } elseif ($user->hasRole('student')) {
+                $enrollments = Enrollment::where('student_id', $user->student->id)->pluck('class_id');
+                $assignments = Assignment::whereIn('class_id', $enrollments)->get();
+            }
+            return Inertia::render('Assignment/Index', [
+                'assignments' => $assignments
+            ]);
+        } catch (\Throwable $e) {
+            return response()->error($e->getMessage(), 403);
         }
-        return Inertia::render('Assignment/Index', [
-            'assignments' => $assignments
-        ]);
     }
 
 
@@ -39,12 +47,10 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        $subjects = Subject::all()->toArray();
-        $teachers = Auth::user()->id;
+        $teachersId = Auth::user()->id;
         $classes = Classes::all()->toArray();
         return Inertia::render('Assignment/Create', [
-            'subjects' => $subjects,
-            'teachers' => $teachers,
+            'teachersId' => $teachersId,
             'classes' => $classes,
         ]);
     }
@@ -58,7 +64,6 @@ class AssignmentController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'deadline' => 'required|date',
-            'subject_id' => 'required|exists:subjects,id',
             'class_id' => 'required|exists:classes,id',
             'teacher_id' => 'required|exists:teachers,id',
         ]);

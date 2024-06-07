@@ -6,28 +6,14 @@ import SelectInput from "@/Components/SelectInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 
-const Create = ({ subjects, teachers, classes }) => {
+const Create = ({ teachersId, classes }) => {
     const [values, setValues] = useState({
         title: "",
         description: "",
         deadline: "",
-        subject_id: "",
-        teacher_id: teachers,
+        teacher_id: teachersId,
         class_id: "",
     });
-
-    const [filteredClasses, setFilteredClasses] = useState([]);
-
-    useEffect(() => {
-        if (values.subject_id !== "") {
-            const filtered = classes.filter(
-                (cls) => cls.subject_id === parseInt(values.subject_id)
-            );
-            setFilteredClasses(filtered);
-        } else {
-            setFilteredClasses(classes);
-        }
-    }, [values.subject_id, classes]);
 
     function handleChange(e) {
         const key = e.target.id;
@@ -41,6 +27,7 @@ const Create = ({ subjects, teachers, classes }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         router.post(route("assignments.store"), values);
+        console.log(values);
     };
 
     return (
@@ -99,28 +86,7 @@ const Create = ({ subjects, teachers, classes }) => {
                         />
                     </div>
 
-                    <div className="">
-                        <InputLabel
-                            htmlFor="subject_id"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Subject
-                        </InputLabel>
-                        <SelectInput
-                            id="subject_id"
-                            onChange={handleChange}
-                            value={values.subject_id}
-                            required
-                        >
-                            <option value="">Select a subject</option>
-                            {subjects.map((subject) => (
-                                <option key={subject.id} value={subject.id}>
-                                    {subject.name}
-                                </option>
-                            ))}
-                        </SelectInput>
-                    </div>
-                    <div className="">
+                    <div>
                         <InputLabel
                             htmlFor="class_id"
                             className="block text-sm font-medium text-gray-700"
@@ -135,7 +101,7 @@ const Create = ({ subjects, teachers, classes }) => {
                             required
                         >
                             <option value="">Select a class</option>
-                            {filteredClasses.map((cls) => (
+                            {classes.map((cls) => (
                                 <option key={cls.id} value={cls.id}>
                                     {cls.name}
                                 </option>
