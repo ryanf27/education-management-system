@@ -40,7 +40,7 @@ class EnrollmentController extends Controller
     {
 
         $classId = request('classId');
-        $studentClass = Classes::with('subject')->find($classId);
+        $studentClass = Classes::where('id', $classId)->first();
         $student_id =  Auth::user()->id;
 
         return Inertia::render('Enrollments/Create', ['studentClass' => $studentClass, 'student_id' => $student_id]);

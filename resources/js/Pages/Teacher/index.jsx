@@ -24,33 +24,11 @@ import {
 } from "recharts";
 
 const Index = ({ schedules, submissions }) => {
-    console.log(submissions);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSubmission, setSelectedSubmission] = useState(null);
     const [values, setValues] = useState({
         score: "",
     });
-
-    const data = [
-        {
-            student_name: "John Doe",
-            assignment_title: "Algebra Test",
-            submission_date: "2023-05-10",
-            score: 85,
-        },
-        {
-            student_name: "Jane Smith",
-            assignment_title: "Biology Report",
-            submission_date: "2023-05-12",
-            score: 90,
-        },
-        {
-            student_name: "Michael Johnson",
-            assignment_title: "History Essay",
-            submission_date: "2023-05-15",
-            score: 78,
-        },
-    ];
 
     const attendanceRecords = [
         { date: "2023-06-01", present: 110, absent: 5, late: 5 },
@@ -212,7 +190,7 @@ const Index = ({ schedules, submissions }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((d, i) => (
+                            {submissions.map((d, i) => (
                                 <tr key={i}>
                                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         {d.student_name}

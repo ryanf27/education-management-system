@@ -25,7 +25,6 @@ const Create = ({ classes }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         router.post(route("assignments.store"), values);
-        console.log(values);
     };
 
     return (

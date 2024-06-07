@@ -13,7 +13,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $studentClass = Classes::with('subject')->get();
+        $studentClass = Classes::all();
         return Inertia::render('Course/Index', [
             'studentClass' => $studentClass
         ]);

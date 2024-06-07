@@ -76,7 +76,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // Submission Routes
-        Route::prefix('submissions')->middleware('role:admin|teacher')->group(function () {
+        Route::prefix('submissions')->middleware('role:admin|student|teacher')->group(function () {
             Route::get('/', [SubmissionController::class, 'index'])->name('submissions.index');
             Route::get('/create', [SubmissionController::class, 'create'])->name('submissions.create');
             Route::post('/', [SubmissionController::class, 'store'])->name('submissions.store');
@@ -108,7 +108,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // Assignment Routes
-        Route::prefix('assignments')->group(function () {
+        Route::prefix('assignments')->middleware('role:admin|teacher')->group(function () {
             Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
             Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
             Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');

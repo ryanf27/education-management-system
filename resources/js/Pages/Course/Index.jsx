@@ -68,8 +68,6 @@ const Index = ({ studentClass }) => {
                                 <p className="text-gray-600">
                                     Grade: {cls.grade}
                                 </p>
-                                <p>{cls.subject.name}</p>
-                                <p>{cls.subject.description}</p>
 
                                 <Link
                                     href={route("enrollments.create", {

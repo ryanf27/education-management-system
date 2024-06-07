@@ -33,9 +33,6 @@ const Create = ({ studentClass, student_id }) => {
                                     <p className="mt-1 max-w-2xl text-sm text-gray-500">
                                         Grade: {studentClass.grade}
                                     </p>
-                                    <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                                        Subject: {studentClass.subject.name}
-                                    </p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-sm text-gray-900">
