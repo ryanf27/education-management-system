@@ -38,19 +38,18 @@ class TeacherController extends Controller
                 ->where('teacher_id', $teacherId)
                 ->get();
 
-            $SubmissionAssignmentPivotData = [];
-
-            foreach ($assignments as $assignment) {
-                foreach ($assignment->submissions as $submission) {
-                    $SubmissionAssignmentPivotData[] = [
+            $SubmissionAssignmentPivotData = $assignments->flatMap(function ($assignment) {
+                return $assignment->submissions->map(function ($submission) use ($assignment) {
+                    return [
                         'id' => $submission->id,
                         'student_name' => $submission->student ? $submission->student->name : 'No Student',
                         'assignment_title' => $assignment->title,
                         'submission_date' => $submission->created_at,
                         'score' => $submission->score ?? '-',
                     ];
-                }
-            }
+                });
+            })->all();
+
 
             return Inertia::render('Teacher/Index', [
                 'submissions' => $SubmissionAssignmentPivotData,

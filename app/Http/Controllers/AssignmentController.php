@@ -9,7 +9,6 @@ use App\Models\Classes;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
 
-
 class AssignmentController extends Controller
 {
     /**
@@ -20,10 +19,6 @@ class AssignmentController extends Controller
 
         try {
             $user = auth()->user();
-
-            if (!$user) {
-                return redirect()->route('login');
-            }
 
             $assignments = collect([]);
 
@@ -47,10 +42,9 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        $teachersId = Auth::user()->id;
+
         $classes = Classes::all()->toArray();
         return Inertia::render('Assignment/Create', [
-            'teachersId' => $teachersId,
             'classes' => $classes,
         ]);
     }
@@ -60,17 +54,28 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'deadline' => 'required|date',
-            'class_id' => 'required|exists:classes,id',
-            'teacher_id' => 'required|exists:teachers,id',
-        ]);
 
-        Assignment::create($validatedData);
+        try {
+            $user = Auth::user();
 
-        return redirect()->route('assignments.index');
+            // Validate the request
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'deadline' => 'required|date',
+                'class_id' => 'required|exists:classes,id',
+            ]);
+
+            $validatedData['teacher_id'] = $user->teacher->id;
+
+
+            Assignment::create($validatedData);
+
+            return redirect()->route('assignments.index');
+        } catch (\Throwable $e) {
+
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 

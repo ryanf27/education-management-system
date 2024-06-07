@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Dashboard from "../Dashboard";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
@@ -6,23 +6,21 @@ import SelectInput from "@/Components/SelectInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 
-const Create = ({ teachersId, classes }) => {
+const Create = ({ classes }) => {
     const [values, setValues] = useState({
         title: "",
         description: "",
         deadline: "",
-        teacher_id: teachersId,
+        teacher_id: "",
         class_id: "",
     });
 
-    function handleChange(e) {
-        const key = e.target.id;
-        const value = e.target.value;
-        setValues((values) => ({
-            ...values,
+    const handleInputChange = ({ target: { id: key, value } }) => {
+        setValues((prevValues) => ({
+            ...prevValues,
             [key]: value,
         }));
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,7 +46,7 @@ const Create = ({ teachersId, classes }) => {
                         <TextInput
                             type="text"
                             id="title"
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             value={values.title}
                             placeholder="Title.."
                             required
@@ -63,7 +61,7 @@ const Create = ({ teachersId, classes }) => {
                         </InputLabel>
                         <textarea
                             id="description"
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             value={values.description}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             rows="3"
@@ -80,7 +78,7 @@ const Create = ({ teachersId, classes }) => {
                         <TextInput
                             type="date"
                             id="deadline"
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             value={values.deadline}
                             required
                         />
@@ -96,7 +94,7 @@ const Create = ({ teachersId, classes }) => {
 
                         <SelectInput
                             id="class_id"
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             value={values.class_id}
                             required
                         >
