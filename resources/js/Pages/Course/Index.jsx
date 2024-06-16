@@ -43,7 +43,6 @@ const Index = ({ studentClass }) => {
             </div>
 
             {/* card list */}
-            {/* card list */}
             <div id="classListCard" className="container mx-auto px-4">
                 <h2 className="text-2xl font-bold text-center mb-4">
                     Class List
